@@ -7,25 +7,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Event\Telemetry;
+namespace PHPUnit\Framework\MockObject\Generator;
 
-use function memory_get_peak_usage;
-use function memory_get_usage;
+use function sprintf;
 
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final readonly class SystemMemoryMeter implements MemoryMeter
+final class UnknownInterfaceException extends \PHPUnit\Framework\Exception implements Exception
 {
-    public function memoryUsage(): MemoryUsage
+    public function __construct(string $interfaceName)
     {
-        return MemoryUsage::fromBytes(memory_get_usage());
-    }
-
-    public function peakMemoryUsage(): MemoryUsage
-    {
-        return MemoryUsage::fromBytes(memory_get_peak_usage());
+        parent::__construct(
+            sprintf(
+                'Interface "%s" does not exist',
+                $interfaceName,
+            ),
+        );
     }
 }
