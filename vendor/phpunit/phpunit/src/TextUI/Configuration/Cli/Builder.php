@@ -57,7 +57,6 @@ final class Builder
         'coverage-xml=',
         'path-coverage',
         'disallow-test-output',
-        'display-all-issues',
         'display-incomplete',
         'display-skipped',
         'display-deprecations',
@@ -107,7 +106,6 @@ final class Builder
         'reverse-list',
         'static-backup',
         'stderr',
-        'fail-on-all-issues',
         'fail-on-deprecation',
         'fail-on-phpunit-deprecation',
         'fail-on-empty-test-suite',
@@ -196,7 +194,6 @@ final class Builder
         $defaultTimeLimit                  = null;
         $disableCodeCoverageIgnore         = null;
         $disallowTestOutput                = null;
-        $displayAllIssues                  = null;
         $displayIncomplete                 = null;
         $displaySkipped                    = null;
         $displayDeprecations               = null;
@@ -208,7 +205,6 @@ final class Builder
         $excludeGroups                     = null;
         $executionOrder                    = null;
         $executionOrderDefects             = null;
-        $failOnAllIssues                   = null;
         $failOnDeprecation                 = null;
         $failOnPhpunitDeprecation          = null;
         $failOnEmptyTestSuite              = null;
@@ -660,11 +656,6 @@ final class Builder
 
                     break;
 
-                case '--fail-on-all-issues':
-                    $failOnAllIssues = true;
-
-                    break;
-
                 case '--fail-on-deprecation':
                     $failOnDeprecation = true;
 
@@ -859,11 +850,6 @@ final class Builder
 
                     break;
 
-                case '--display-all-issues':
-                    $displayAllIssues = true;
-
-                    break;
-
                 case '--display-incomplete':
                     $displayIncomplete = true;
 
@@ -1044,7 +1030,6 @@ final class Builder
             $excludeGroups,
             $executionOrder,
             $executionOrderDefects,
-            $failOnAllIssues,
             $failOnDeprecation,
             $failOnPhpunitDeprecation,
             $failOnEmptyTestSuite,
@@ -1103,7 +1088,6 @@ final class Builder
             $testSuite,
             $excludeTestSuite,
             $useDefaultConfiguration,
-            $displayAllIssues,
             $displayIncomplete,
             $displaySkipped,
             $displayDeprecations,
