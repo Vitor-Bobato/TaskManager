@@ -47,4 +47,13 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso!');
     }
+
+    public function destroy($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->delete();
+
+        return redirect()->route('tasks.index')->with('success', 'Tarefa excluída com sucesso!');
+    }
+
 }

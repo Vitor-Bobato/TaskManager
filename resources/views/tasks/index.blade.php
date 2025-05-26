@@ -19,9 +19,23 @@
                 <strong>{{ $task->title }}</strong> - {{ $task->description }} <br>
                 Data: {{ $task->due_date ?? 'Sem data limite' }} |
                 Prioridade: {{ $task->priority }}
+                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
             </li>
         @endforeach
     </ul>
+
+
+
+
+
+
+
+
+
     @if (session('success'))
         <script>
             Swal.fire({
