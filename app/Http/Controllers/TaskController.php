@@ -56,4 +56,22 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Tarefa excluída com sucesso!');
     }
 
+    public function edit($id) {
+    $task = Task::findOrFail($id);
+    return view('tasks.edit', compact('task'));
+}
+
+public function update(Request $request, $id) {
+    $task = Task::findOrFail($id);
+    // Validação dos dados
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        // Adicione outros campos conforme necessário
+    ]);
+    $task->update($validated);
+    return redirect()->route('tasks.index')->with('success', 'Tarefa atualizada com sucesso!');
+}
+
+
 }

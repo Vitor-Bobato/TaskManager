@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,6 +25,9 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Excluir</button>
                 </form>
+                <a href="{{ route('tasks.edit', $task->id) }}">
+                            <button>Editar</button>
+                        </a>
             </li>
         @endforeach
     </ul>

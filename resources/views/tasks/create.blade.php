@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -56,7 +57,6 @@
             });
         </script>
     @endif
-
 
 
     <a href="{{ route('tasks.index') }}">Voltar</a>
