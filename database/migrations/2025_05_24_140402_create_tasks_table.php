@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->date('due_date')->nullable();
-            $table->enum('priority', ['Alta', 'Media', 'Baixa']) -> default('Média');
+            $table->enum('priority', ['Alta', 'Media', 'Baixa']) -> default('Media');
             $table->timestamps();
         });
     }

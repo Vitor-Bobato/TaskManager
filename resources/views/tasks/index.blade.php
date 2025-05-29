@@ -33,12 +33,12 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($tasks as $task)
-                <div class="task-card bg-white rounded-xl shadow-md overflow-hidden border-l-4 
+                <div class="task-card bg-white rounded-xl shadow-md overflow-hidden border-l-4
                     @if($task->priority === 'Alta') border-red-800
-                    @elseif($task->priority === 'Média') border-yellow-700
+                    @elseif($task->priority === 'Media') border-yellow-600
                     @else border-green-700
                     @endif">
-                    
+
                     <div class="p-5">
                         <div class="flex justify-between items-start mb-3">
                             <h3 class="font-bold text-xl text-gray-800 flex items-center">
@@ -58,23 +58,23 @@
                                 </form>
                             </div>
                         </div>
-                        
+
                         <p class="text-gray-600 mb-4">{{ $task->description }}</p>
-                        
+
                         <div class="flex items-center text-sm text-gray-500 mb-3">
                             <i class="far fa-calendar-alt mr-2"></i>
                             {{ $task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('d/m/Y') : 'Sem data limite' }}
                         </div>
-                        
+
                         <div class="flex items-center text-sm mb-4
                             @if($task->priority === 'Alta') text-red-800
-                            @elseif($task->priority === 'Média') text-yellow-700
+                            @elseif($task->priority === 'Media') text-yellow-600
                             @else text-green-700
                             @endif">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             Prioridade: {{ $task->priority }}
                         </div>
-                        
+
                         <button class="w-full bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center">
                             <i class="fas fa-check mr-2"></i> Concluir
                         </button>

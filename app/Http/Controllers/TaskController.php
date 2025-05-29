@@ -29,10 +29,8 @@ class TaskController extends Controller
         ([
             'title' => ['required', 'regex:/[A-Za-zÀ-ÿ]/', 'max:255'],
             'description' => ['required', 'regex:/[A-Za-zÀ-ÿ]/'],
-            'due_date' => 'nullable|date'
-
-        ,
-            'priority' => 'required|in:Alta,Média,Baixa',
+            'due_date' => 'nullable|date',
+            'priority' => 'required|in:Alta,Media,Baixa',
         ]);
 
         $data = $request->all();

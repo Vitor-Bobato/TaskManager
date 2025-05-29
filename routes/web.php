@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\LoginController; // Adicionado: Importar o LoginController
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,3 +20,9 @@ Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
+// Rotas de Login
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+// Poderíamos adicionar a rota de logout aqui também no futuro
+// Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
