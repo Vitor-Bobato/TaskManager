@@ -2,147 +2,213 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ isset($task) ? 'Editar' : 'Criar' }} Tarefa - TaskManager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Editar Task</title>
     <style>
+        :root {
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --primary-light: #D1FAE5;
+            --secondary: #3B82F6;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            color: #222;
-            margin: 0;
-            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9FAFB;
             min-height: 100vh;
-        }
-        h1 {
-            color: #2d7fff;
-            text-align: center;
-            margin-top: 30px;
-        }
-        form {
-            background: #fff;
-            border-radius: 10px;
-            max-width: 400px;
-            margin: 40px auto 0 auto;
-            box-shadow: 0 4px 16px rgba(45,127,255,.08);
-            padding: 30px 35px 25px 35px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            animation: fadeIn 0.7s;
+            align-items: center;
         }
-        label {
-            font-weight: bold;
-            color: #2d7fff;
-            margin-bottom: 5px;
+        
+        .form-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease;
+            overflow: hidden;
         }
-        input[type="text"], input[type="date"], select, textarea {
-            border: 1px solid #d9d9d9;
-            border-radius: 6px;
-            padding: 8px 10px;
-            font-size: 1rem;
-            transition: box-shadow 0.2s;
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
-            box-shadow: 0 0 0 2px #2d7fff44;
-            outline: none;
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
         }
-        textarea {
-            min-height: 80px;
-            max-height: 250px;
-            resize: vertical;
+        
+        .form-body {
+            padding: 2rem;
         }
+        
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
         .input-group {
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 1.5rem;
         }
-        .char-counter {
-            font-size: 0.9em;
-            color: #888;
-            margin-top: 3px;
-            margin-bottom: 0;
-            text-align: right;
-            transition: color 0.2s;
-        }
-        .char-counter.over {
-            color: #ff3d3d;
-            font-weight: bold;
-        }
-        button[type="submit"] {
-            background: linear-gradient(90deg, #2d7fff 60%, #1a5fcc 100%);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1.08rem;
-            padding: 10px 0;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        button[type="submit"]:hover {
-            background: linear-gradient(90deg, #1a5fcc 60%, #2d7fff 100%);
-            transform: translateY(-2px) scale(1.03);
-        }
-        a {
+        
+        .input-label {
             display: block;
-            text-align: center;
-            color: #2d7fff;
-            margin: 18px 0 0 0;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.2s;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
         }
-        a:hover {
-            color: #1a5fcc;
+        
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px);}
-            to { opacity: 1; transform: translateY(0);}
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .char-counter {
+            font-size: 0.75rem;
+            color: #6B7280;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+        
+        .char-counter.over {
+            color: #EF4444;
+            font-weight: 500;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-back:hover {
+            color: var(--primary-dark);
+            transform: translateX(-3px);
+        }
+        
+        .priority-high {
+            color: #EF4444;
+        }
+        
+        .priority-medium {
+            color: #F59E0B;
+        }
+        
+        .priority-low {
+            color: #10B981;
         }
     </style>
 </head>
 <body>
-    <h1>Editar Task</h1>
-    <form id="taskForm" method="POST" action="{{ route('tasks.update', $task->id) }}">
-        @csrf
-        @method('PUT')
+    <div class="container mx-auto px-4 py-8 max-w-md">
+        <div class="form-container">
+            <div class="form-header">
+                <h1 class="form-title">
+                    <i class="fas fa-tasks mr-2"></i>
+                    {{ isset($task) ? 'Editar Tarefa' : 'Criar Nova Tarefa' }}
+                </h1>
+                <p class="form-subtitle">Preencha os detalhes da tarefa abaixo</p>
+            </div>
+            
+            <div class="form-body">
+                <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
+                    @csrf
+                    @if(isset($task))
+                        @method('PUT')
+                    @endif
 
-        <div class="input-group">
-            <label for="title">Título da Task*</label>
-            <input type="text" id="title" name="title" maxlength="50" required autocomplete="off"
-                value="{{ old('title', $task->title) }}" oninput="updateCharCounter('title', 50)">
-            <div class="char-counter" id="counter-title">0/50</div>
+                    <div class="input-group">
+                        <label for="title" class="input-label">Título da Tarefa*</label>
+                        <input type="text" id="title" name="title" class="input-field" 
+                               value="{{ old('title', isset($task) ? $task->title : '') }}" 
+                               maxlength="50" required autocomplete="off" 
+                               oninput="updateCharCounter('title', 50)">
+                        <div class="char-counter" id="counter-title">0/50</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="description" class="input-label">Descrição</label>
+                        <textarea id="description" name="description" class="input-field" rows="4"
+                                  maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description', isset($task) ? $task->description : '') }}</textarea>
+                        <div class="char-counter" id="counter-description">0/500</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="due_date" class="input-label">Data Limite*</label>
+                        <input type="date" id="due_date" name="due_date" class="input-field" 
+                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="priority" class="input-label">Prioridade*</label>
+                        <select id="priority" name="priority" class="input-field" required>
+                            <option value="" disabled {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }}>Selecione a prioridade</option>
+                            <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
+                            <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
+                            <option value="Baixa" {{ old('priority', isset($task) ? $task->priority : '') == "Baixa" ? 'selected' : '' }} class="priority-low">Baixa</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-save mr-2"></i>
+                        {{ isset($task) ? 'Atualizar Tarefa' : 'Criar Tarefa' }}
+                    </button>
+                </form>
+
+                <a href="{{ route('tasks.index') }}" class="btn-back">
+                    <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+                </a>
+            </div>
         </div>
-
-        <div class="input-group">
-            <label for="description">Descrição da Task</label>
-            <textarea id="description" name="description" maxlength="500" autocomplete="off"
-                oninput="updateCharCounter('description', 500)">{{ old('description', $task->description) }}</textarea>
-            <div class="char-counter" id="counter-description">0/500</div>
-        </div>
-
-        <div class="input-group">
-            <label for="due_date">Data Limite*</label>
-            <input type="date" id="due_date" name="due_date" required
-                value="{{ old('due_date', $task->due_date) }}">
-        </div>
-
-        <div class="input-group">
-            <label for="priority">Prioridade*</label>
-            <select id="priority" name="priority" required>
-                <option value="" {{ old('priority', $task->priority) == "" ? 'selected' : '' }}>Selecione a prioridade</option>
-                <option value="Alta" {{ old('priority', $task->priority) == "Alta" ? 'selected' : '' }}>Alta</option>
-                <option value="Média" {{ old('priority', $task->priority) == "Média" ? 'selected' : '' }}>Média</option>
-                <option value="Baixa" {{ old('priority', $task->priority) == "Baixa" ? 'selected' : '' }}>Baixa</option>
-            </select>
-        </div>
-
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{{ route('tasks.index') }}">Voltar</a>
+    </div>
 
     @if (session('success'))
         <script>
@@ -151,7 +217,10 @@
                 title: 'Sucesso!',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
+                background: '#F9FAFB',
+                position: 'top-end',
+                toast: true
             });
         </script>
     @endif
@@ -162,7 +231,8 @@
                 icon: 'error',
                 title: 'Erro!',
                 html: `{!! implode('<br>', $errors->all()) !!}`,
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                background: '#F9FAFB'
             });
         </script>
     @endif
@@ -177,6 +247,7 @@
             const minDate = `${yyyy}-${mm}-${dd}`;
             document.getElementById('due_date').setAttribute('min', minDate);
 
+            // Initialize counters
             updateCharCounter('title', 50);
             updateCharCounter('description', 500);
         });
@@ -184,70 +255,91 @@
         function updateCharCounter(field, max) {
             const input = document.getElementById(field);
             const counter = document.getElementById('counter-' + field);
-            let val = input.value.length;
-            counter.textContent = val + '/' + max;
-            if (val > max) {
+            const length = input.value.length;
+            counter.textContent = `${length}/${max}`;
+            
+            if (length > max) {
                 counter.classList.add('over');
+                input.classList.add('border-red-500');
+                input.classList.remove('border-gray-300');
             } else {
                 counter.classList.remove('over');
+                input.classList.remove('border-red-500');
+                input.classList.add('border-gray-300');
             }
         }
 
+        // Form validation
         document.getElementById('taskForm').addEventListener('submit', function(e) {
-            // Título
+            let isValid = true;
             const title = document.getElementById('title').value.trim();
-            if (!title) {
-                showError("O campo <b>Título da Task</b> é obrigatório e não pode estar em branco.");
-                e.preventDefault();
-                return;
-            }
-            if (title.length > 50) {
-                showError("O campo <b>Título da Task</b> deve ter no máximo 50 caracteres.");
-                e.preventDefault();
-                return;
-            }
-
-            // Descrição
-            const desc = document.getElementById('description').value.trim();
-            if (desc.length > 500) {
-                showError("A <b>Descrição da Task</b> deve ter no máximo 500 caracteres.");
-                e.preventDefault();
-                return;
-            }
-
-            // Data Limite
+            const description = document.getElementById('description').value.trim();
             const dueDate = document.getElementById('due_date').value;
-            if (!dueDate) {
-                showError("O campo <b>Data Limite</b> é obrigatório.");
-                e.preventDefault();
-                return;
-            }
-            const today = new Date();
-            const selected = new Date(dueDate);
-            today.setHours(0,0,0,0); selected.setHours(0,0,0,0);
-            if (selected < today) {
-                showError("A <b>Data Limite</b> deve ser hoje ou uma data futura.");
-                e.preventDefault();
-                return;
-            }
-
-            // Prioridade
             const priority = document.getElementById('priority').value;
+            
+            // Title validation
+            if (!title) {
+                showError('title', 'O título é obrigatório');
+                isValid = false;
+            } else if (title.length > 50) {
+                showError('title', 'O título deve ter no máximo 50 caracteres');
+                isValid = false;
+            }
+            
+            // Description validation
+            if (description.length > 500) {
+                showError('description', 'A descrição deve ter no máximo 500 caracteres');
+                isValid = false;
+            }
+            
+            // Due date validation
+            if (!dueDate) {
+                showError('due_date', 'A data limite é obrigatória');
+                isValid = false;
+            } else {
+                const today = new Date();
+                const selected = new Date(dueDate);
+                today.setHours(0,0,0,0); 
+                selected.setHours(0,0,0,0);
+                
+                if (selected < today) {
+                    showError('due_date', 'A data deve ser hoje ou no futuro');
+                    isValid = false;
+                }
+            }
+            
+            // Priority validation
             if (!priority) {
-                showError("O campo <b>Prioridade</b> é obrigatório.");
+                showError('priority', 'A prioridade é obrigatória');
+                isValid = false;
+            }
+            
+            if (!isValid) {
                 e.preventDefault();
-                return;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Formulário inválido',
+                    text: 'Por favor, corrija os erros destacados',
+                    confirmButtonText: 'OK',
+                    background: '#F9FAFB'
+                });
             }
         });
-
-        function showError(msg) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Erro no formulário',
-                html: msg,
-                confirmButtonText: 'OK'
-            });
+        
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            field.classList.add('border-red-500');
+            
+            let errorElement = document.getElementById(`error-${fieldId}`);
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.id = `error-${fieldId}`;
+                errorElement.className = 'text-red-500 text-sm mt-1';
+                field.parentNode.insertBefore(errorElement, field.nextSibling);
+            }
+            
+            errorElement.textContent = message;
         }
     </script>
 </body>
-</html>
+</html> 
