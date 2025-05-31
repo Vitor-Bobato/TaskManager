@@ -29,10 +29,8 @@ class TaskController extends Controller
         ([
             'title' => ['required', 'regex:/[A-Za-zÀ-ÿ]/', 'max:255'],
             'description' => ['required', 'regex:/[A-Za-zÀ-ÿ]/'],
-            'due_date' => 'nullable|date'
-
-        ,
-            'priority' => 'required|in:Alta,Média,Baixa',
+            'due_date' => 'nullable|date',
+            'priority' => 'required|in:Alta,Media,Baixa',
         ]);
 
         $data = $request->all();
@@ -55,5 +53,23 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Tarefa excluída com sucesso!');
     }
+
+    public function edit($id) {
+    $task = Task::findOrFail($id);
+    return view('tasks.edit', compact('task'));
+}
+
+public function update(Request $request, $id) {
+    $task = Task::findOrFail($id);
+    // Validação dos dados
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        // Adicione outros campos conforme necessário
+    ]);
+    $task->update($validated);
+    return redirect()->route('tasks.index')->with('success', 'Tarefa atualizada com sucesso!');
+}
+
 
 }
