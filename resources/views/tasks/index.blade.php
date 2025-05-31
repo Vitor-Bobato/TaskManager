@@ -6,53 +6,145 @@
     <title>TaskManager - Lista de Tarefas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        :root {
+            --primary: #10B981;
+            --primary-dark: #047857;
+            --primary-light: #D1FAE5;
+            --secondary: #3B82F6;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9FAFB;
+        }
+        
         .task-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .priority-high {
+            border-left-color: #EF4444;
+            background: linear-gradient(to right, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.01) 100%);
+        }
+        
+        .priority-medium {
+            border-left-color: #F59E0B;
+            background: linear-gradient(to right, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.01) 100%);
+        }
+        
+        .priority-low {
+            border-left-color: #10B981;
+            background: linear-gradient(to right, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.01) 100%);
+        }
+        
+        .btn-action {
+            transition: all 0.2s ease;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .btn-action:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.1);
+        }
+        
+        .btn-create {
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
-        .task-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-create:active {
+            transform: translateY(0);
+        }
+        
+        .empty-state {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .task-complete {
+            position: relative;
+        }
+        
+        .task-complete::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .task-complete.completed::after {
+            transform: scaleX(1);
         }
     </style>
 </head>
-<body class="bg-gray-200 min-h-screen">
+<body class="min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <header class="mb-8 bg-white rounded-xl shadow-sm p-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-tasks text-green-700 mr-2"></i>
-                    TaskManager
-                </h1>
-                <a href="{{ route('tasks.create') }}" class="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
-                    <i class="fas fa-plus mr-2"></i>Criar tarefa
-                </a>
+        <header class="mb-8 bg-white rounded-xl shadow-sm p-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-tasks text-green-600 text-2xl mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">TaskManager</h1>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="{{ route('tasks.create') }}" class="btn-create bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center">
+                        <i class="fas fa-plus mr-2"></i>Criar tarefa
+                    </a>
+                </div>
             </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($tasks as $task)
                 <div class="task-card bg-white rounded-xl shadow-md overflow-hidden border-l-4
-                    @if($task->priority === 'Alta') border-red-800
-                    @elseif($task->priority === 'Media') border-yellow-600
-                    @else border-green-700
+                    @if($task->priority === 'Alta') priority-high
+                    @elseif($task->priority === 'Media') priority-medium
+                    @else priority-low
                     @endif">
 
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-bold text-xl text-gray-800 flex items-center">
-                                <span class="bg-gray-100 text-gray-600 rounded-full w-6 h-6 flex items-center justify-center text-sm mr-2">#</span>
-                                {{ $task->title }}
-                            </h3>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center">
+                                <span class="bg-gray-100 text-gray-600 rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3">#{{ $loop->iteration }}</span>
+                                <h3 class="font-bold text-xl text-gray-800 task-complete">{{ $task->title }}</h3>
+                            </div>
                             <div class="flex space-x-2">
-                                <a href="{{ route('tasks.edit', $task->id) }}" class="text-gray-600 hover:text-green-700" title="Editar">
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn-action text-gray-600 hover:text-green-600" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-gray-600 hover:text-red-700" title="Excluir">
+                                    <button type="submit" class="btn-action text-gray-600 hover:text-red-600" title="Excluir">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
@@ -67,15 +159,15 @@
                         </div>
 
                         <div class="flex items-center text-sm mb-4
-                            @if($task->priority === 'Alta') text-red-800
+                            @if($task->priority === 'Alta') text-red-600
                             @elseif($task->priority === 'Media') text-yellow-600
-                            @else text-green-700
+                            @else text-green-600
                             @endif">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             Prioridade: {{ $task->priority }}
                         </div>
 
-                        <button class="w-full bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center complete-btn">
                             <i class="fas fa-check mr-2"></i> Concluir
                         </button>
                     </div>
@@ -84,10 +176,11 @@
         </div>
 
         @if($tasks->isEmpty())
-            <div class="text-center py-12 bg-white rounded-xl shadow-sm mt-8">
+            <div class="empty-state text-center py-12 bg-white rounded-xl shadow-sm mt-8">
                 <i class="fas fa-tasks text-5xl text-gray-300 mb-4"></i>
-                <h3 class="text-xl font-medium text-gray-500 mb-2">Nenhuma tarefa encontrada</h3>
-                <a href="{{ route('tasks.create') }}" class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+                <h3 class="text-xl font-medium text-gray-500 mb-4">Nenhuma tarefa encontrada</h3>
+                <p class="text-gray-500 mb-6">Comece criando sua primeira tarefa para organizar seu dia</p>
+                <a href="{{ route('tasks.create') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105">
                     <i class="fas fa-plus mr-2"></i> Criar primeira tarefa
                 </a>
             </div>
@@ -101,20 +194,69 @@
                 title: 'Sucesso!',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
+                background: '#F9FAFB',
+                position: 'top-end',
+                toast: true
             });
         </script>
     @endif
 
-    @if ($errors->any())
+    @if ($errors->any()))
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Erro!',
                 html: `{!! implode('<br>', $errors->all()) !!}`,
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                background: '#F9FAFB'
             });
         </script>
     @endif
+
+    <script>
+        // Confirmação para exclusão
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                Swal.fire({
+                    title: 'Tem certeza?',
+                    text: "Esta ação não pode ser desfeita!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#10B981',
+                    cancelButtonColor: '#EF4444',
+                    confirmButtonText: 'Sim, excluir!',
+                    cancelButtonText: 'Cancelar',
+                    background: '#F9FAFB'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+        });
+        
+        // Efeito de conclusão de tarefa
+        document.querySelectorAll('.complete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const taskTitle = this.closest('.task-card').querySelector('.task-complete');
+                taskTitle.classList.toggle('completed');
+                
+                if (taskTitle.classList.contains('completed')) {
+                    this.innerHTML = '<i class="fas fa-undo mr-2"></i> Reabrir';
+                    this.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    this.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                } else {
+                    this.innerHTML = '<i class="fas fa-check mr-2"></i> Concluir';
+                    this.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                    this.classList.add('bg-green-600', 'hover:bg-green-700');
+                }
+                
+                // Aqui você pode adicionar uma chamada AJAX para atualizar o status no banco de dados
+            });
+        });
+    </script>
 </body>
 </html>
