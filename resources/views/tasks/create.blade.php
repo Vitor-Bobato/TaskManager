@@ -1,65 +1,69 @@
-
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>create</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Tarefa - TaskManager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center py-8">
+    <div class="w-full max-w-md px-4">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-green-700 px-6 py-4">
+                <h1 class="text-xl font-bold text-white flex items-center">
+                    <i class="fas fa-plus mr-2"></i>
+                    Criar Nova Tarefa
+                </h1>
+            </div>
 
-    <h1>Criar Task</h1>
+            <form method="POST" action="{{ route('tasks.store') }}" class="p-6">
+                @csrf
 
-    <form method="POST" action="{{ route('tasks.store') }}">
-        @csrf
+                <div class="space-y-4">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Título*</label>
+                        <input type="text" name="title" id="title" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
+                    </div>
 
-        <label>Título:</label>
-        <input type="text" name="title" required><br>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                        <textarea name="description" id="description" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"></textarea>
+                    </div>
 
-        <label>Descrição:</label>
-        <textarea name="description" required></textarea><br>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="due_date" class="block text-sm font-medium text-gray-700 mb-1">Data Limite</label>
+                            <input type="date" name="due_date" id="due_date"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
+                        </div>
 
-        <label>Data limite:</label>
-        <input type="date" name="due_date"><br>
+                        <div>
+                            <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">Prioridade*</label>
+                            <select name="priority" id="priority" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
+                                <option value="Alta">Alta</option>
+                                <option value="Media" selected>Média</option>
+                                <option value="Baixa">Baixa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-        <label>Prioridade:</label>
-        <select name="priority" required>
-            <option value="Alta">Alta</option>
-            <option value="Média" selected>Média</option>
-            <option value="Baixa">Baixa</option>
-        </select><br><br>
-
-        <button type="submit">Salvar</button>
-    </form>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        </script>
-    @endif
-
-    @if ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Erro!',
-                html: `{!! implode('<br>', $errors->all()) !!}`,
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-
-    <a href="{{ route('tasks.index') }}">Voltar</a>
-
+                <div class="flex justify-between mt-6">
+                    <a href="{{ route('tasks.index') }}"
+                       class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Voltar
+                    </a>
+                    <button type="submit"
+                            class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 flex items-center">
+                        <i class="fas fa-save mr-2"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
