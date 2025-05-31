@@ -25,6 +25,24 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+//        $validatedData = $request->validate([
+//            'nome_completo' => ['required', 'string', 'min:3', 'max:255'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+//            'password' => ['required', 'string', 'min:8', 'confirmed'],
+//        ], [
+//            // Mensagens de erro personalizadas
+//            'nome_completo.required' => 'O nome completo é obrigatório.',
+//            'nome_completo.min' => 'O nome completo deve ter pelo menos 3 caracteres.',
+//            'nome_completo.max' => 'O nome completo não pode exceder 255 caracteres.',
+//            'email.required' => 'O email é obrigatório.',
+//            'email.email' => 'Por favor, insira um endereço de email válido.',
+//            'email.unique' => 'Este endereço de email já está cadastrado.',
+//            'email.max' => 'O email não pode exceder 255 caracteres.',
+//            'password.required' => 'A senha é obrigatória.',
+//            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+//            'password.confirmed' => 'A confirmação da senha não coincide.',
+//        ]);
+
         $request->validate
         ([
             'title' => ['required', 'regex:/[A-Za-zÀ-ÿ]/', 'max:255'],

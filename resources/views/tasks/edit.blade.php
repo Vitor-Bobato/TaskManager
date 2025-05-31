@@ -16,7 +16,7 @@
                     Editar Tarefa
                 </h1>
             </div>
-            
+
             <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="p-6">
                 @csrf
                 @method('PUT')
@@ -27,38 +27,38 @@
                         <input type="text" name="title" id="title" value="{{ old('title', $task->title) }}" required
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
                     </div>
-                    
+
                     <div>
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
                         <textarea name="description" id="description" rows="3"
                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">{{ old('description', $task->description) }}</textarea>
                     </div>
-                    
+
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="due_date" class="block text-sm font-medium text-gray-700 mb-1">Data Limite</label>
                             <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date) }}"
                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
                         </div>
-                        
+
                         <div>
                             <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">Prioridade*</label>
                             <select name="priority" id="priority" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700">
                                 <option value="Alta" {{ old('priority', $task->priority) === 'Alta' ? 'selected' : '' }}>Alta</option>
-                                <option value="Média" {{ old('priority', $task->priority) === 'Média' ? 'selected' : '' }}>Média</option>
+                                <option value="Media" {{ old('priority', $task->priority) === 'Media' ? 'selected' : '' }}>Média</option>
                                 <option value="Baixa" {{ old('priority', $task->priority) === 'Baixa' ? 'selected' : '' }}>Baixa</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flex justify-between mt-6">
-                    <a href="{{ route('tasks.index') }}" 
+                    <a href="{{ route('tasks.index') }}"
                        class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 flex items-center">
                         <i class="fas fa-arrow-left mr-2"></i> Cancelar
                     </a>
-                    <button type="submit" 
+                    <button type="submit"
                             class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 flex items-center">
                         <i class="fas fa-save mr-2"></i> Atualizar
                     </button>
