@@ -25,20 +25,21 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate
+        $validatedData = $request->validate
         ([
-            'title' => ['required', 'regex:/[A-Za-zÀ-ÿ]/', 'max:255'],
-            'description' => ['required', 'regex:/[A-Za-zÀ-ÿ]/'],
-            'due_date' => 'nullable|date',
-            'priority' => 'required|in:Alta,Media,Baixa',
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:500'],
+            'due_date' => ['nullable', 'date', 'after_or_equal:today'],
+            'priority' => ['nullable' , 'string', 'in:Alta,Media,Baixa'],
+        ], [
+            'title.required' => 'O título é obrigatório.',
+            'title.max' => 'O título não pode exceder 255 caracteres.',
+            'description.max' => 'A descrição não pode exceder 500 caracteres.',
+            'due_data.after_or_equal' => 'A data de vencimento deve ser uma data futura ou igual a hoje.',
+            'priority.in' => 'A prioridade deve ser uma das seguintes opções: Alta, Media, Baixa.',
         ]);
 
-        $data = $request->all();
-        if (empty($data['due_date'])) {
-            $data['due_date'] = null;
-        }
-
-        $task = Task::create($data);
+        $task = Task::create($validatedData);
 
         Log::info('Tarefa criada', ['id' => $task->id, 'title' => $task->title]);
 
@@ -62,14 +63,32 @@ class TaskController extends Controller
 public function update(Request $request, $id) {
     $task = Task::findOrFail($id);
     // Validação dos dados
-    $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        // Adicione outros campos conforme necessário
+    $validatedData = $request->validate([
+        'title' => ['sometimes', 'required', 'string', 'max:255'],
+        'description' => ['nullable', 'string', 'max:500'],
+        'due_date' => ['nullable', 'date', 'after_or_equal:today'],
+        'priority' => ['nullable', 'string', 'in:Alta,Media,Baixa'],
+    ], [
+        'title.required' => 'O título é obrigatório.',
+        'title.max' => 'O título não pode exceder 255 caracteres.',
+        'description.max' => 'A descrição não pode exceder 500 caracteres.',
+        'due_date.after_or_equal' => 'A data de vencimento deve ser uma data futura ou igual a hoje.',
+        'priority.in' => 'A prioridade deve ser uma das seguintes opções: Alta, Media, Baixa.',
     ]);
-    $task->update($validated);
+
+    if (!$request->filled('due_date'))
+    {
+        $validatedData['due_date'] = null;
+    }
+
+    if (!$request->filled('priority'))
+    {
+        $validatedData['priority'] = null;
+    }
+    $task->update($validatedData);
     return redirect()->route('tasks.index')->with('success', 'Tarefa atualizada com sucesso!');
 }
+
 
 
 }

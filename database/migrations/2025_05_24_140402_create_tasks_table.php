@@ -14,16 +14,14 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->date('due_date')->nullable();
-            $table->enum('priority', ['Alta', 'Media', 'Baixa']) -> default('Media');
+            $table->enum('priority', ['Alta', 'Media', 'Baixa']) -> default('Baixa');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('tasks');
