@@ -15,37 +15,37 @@
             --primary-light: #D1FAE5;
             --secondary: #3B82F6;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #F9FAFB;
         }
-        
+
         .task-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
         }
-        
+
         .task-card:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
+
         .priority-high {
             border-left-color: #EF4444;
             background: linear-gradient(to right, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.01) 100%);
         }
-        
+
         .priority-medium {
             border-left-color: #F59E0B;
             background: linear-gradient(to right, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.01) 100%);
         }
-        
+
         .priority-low {
             border-left-color: #10B981;
             background: linear-gradient(to right, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.01) 100%);
         }
-        
+
         .btn-action {
             transition: all 0.2s ease;
             width: 32px;
@@ -55,40 +55,40 @@
             justify-content: center;
             border-radius: 50%;
         }
-        
+
         .btn-action:hover {
             background-color: rgba(0, 0, 0, 0.05);
             transform: scale(1.1);
         }
-        
+
         .btn-create {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
-        
+
         .btn-create:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        
+
         .btn-create:active {
             transform: translateY(0);
         }
-        
+
         .empty-state {
             animation: fadeIn 0.6s ease forwards;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .task-complete {
             position: relative;
         }
-        
+
         .task-complete::after {
             content: '';
             position: absolute;
@@ -101,7 +101,7 @@
             transform-origin: left;
             transition: transform 0.3s ease;
         }
-        
+
         .task-complete.completed::after {
             transform: scaleX(1);
         }
@@ -115,10 +115,19 @@
                     <i class="fas fa-tasks text-green-600 text-2xl mr-3"></i>
                     <h1 class="text-2xl font-bold text-gray-800">TaskManager</h1>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex items-center space-x-4"> {{-- Adicionado items-center para alinhar verticalmente se necessário --}}
                     <a href="{{ route('tasks.create') }}" class="btn-create bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center">
                         <i class="fas fa-plus mr-2"></i>Criar tarefa
                     </a>
+
+                    {{-- NOVO BOTÃO DE LOGOUT --}}
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn-create bg-red-700 hover:bg-red-600 text-white px-6 py-3 rounded-lg flex items-center">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                        </button>
+                    </form>
+                    {{-- FIM DO BOTÃO DE LOGOUT --}}
                 </div>
             </div>
         </header>
@@ -219,7 +228,7 @@
         document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 Swal.fire({
                     title: 'Tem certeza?',
                     text: "Esta ação não pode ser desfeita!",
@@ -237,13 +246,13 @@
                 });
             });
         });
-        
+
         // Efeito de conclusão de tarefa
         document.querySelectorAll('.complete-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const taskTitle = this.closest('.task-card').querySelector('.task-complete');
                 taskTitle.classList.toggle('completed');
-                
+
                 if (taskTitle.classList.contains('completed')) {
                     this.innerHTML = '<i class="fas fa-undo mr-2"></i> Reabrir';
                     this.classList.remove('bg-green-600', 'hover:bg-green-700');
@@ -253,7 +262,7 @@
                     this.classList.remove('bg-blue-600', 'hover:bg-blue-700');
                     this.classList.add('bg-green-600', 'hover:bg-green-700');
                 }
-                
+
                 // Aqui você pode adicionar uma chamada AJAX para atualizar o status no banco de dados
             });
         });

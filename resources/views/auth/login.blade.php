@@ -247,10 +247,6 @@
                         @enderror
                     </div>
 
-                    <div class="remember-me">
-                        <input type="checkbox" id="remember" name="remember" class="rounded text-green-600 focus:ring-green-500">
-                        <label for="remember" class="text-sm text-gray-600">Lembrar-me</label>
-                    </div>
 
                     <button type="submit" class="btn-submit" id="submitButton">
                         <i class="fas fa-sign-in-alt mr-2"></i> Entrar
