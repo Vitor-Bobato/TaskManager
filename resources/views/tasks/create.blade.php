@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ isset($task) ? 'Editar' : 'Criar' }} Tarefa - TaskManager</title>
+    <title>Criar Tarefa - TaskManager</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -68,6 +68,12 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
+        }
+        
+        .input-label.required:after {
+            content: '*';
+            color: #EF4444;
+            margin-left: 0.25rem;
         }
         
         .input-field {
@@ -153,22 +159,19 @@
             <div class="form-header">
                 <h1 class="form-title">
                     <i class="fas fa-tasks mr-2"></i>
-                    {{ isset($task) ? 'Editar Tarefa' : 'Criar Nova Tarefa' }}
+                    Criar Nova Tarefa
                 </h1>
                 <p class="form-subtitle">Preencha os detalhes da tarefa abaixo</p>
             </div>
             
             <div class="form-body">
-                <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
+                <form id="taskForm" method="POST" action="{{ route('tasks.store') }}">
                     @csrf
-                    @if(isset($task))
-                        @method('PUT')
-                    @endif
 
                     <div class="input-group">
-                        <label for="title" class="input-label">Título da Tarefa*</label>
+                        <label for="title" class="input-label required">Título da Tarefa</label>
                         <input type="text" id="title" name="title" class="input-field" 
-                               value="{{ old('title', isset($task) ? $task->title : '') }}" 
+                               value="{{ old('title') }}" 
                                maxlength="50" required autocomplete="off" 
                                oninput="updateCharCounter('title', 50)">
                         <div class="char-counter" id="counter-title">0/50</div>
@@ -177,29 +180,28 @@
                     <div class="input-group">
                         <label for="description" class="input-label">Descrição</label>
                         <textarea id="description" name="description" class="input-field" rows="4"
-                                  maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description', isset($task) ? $task->description : '') }}</textarea>
+                                  maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description') }}</textarea>
                         <div class="char-counter" id="counter-description">0/500</div>
                     </div>
 
                     <div class="input-group">
-                        <label for="due_date" class="input-label">Data Limite*</label>
+                        <label for="due_date" class="input-label">Data Limite</label>
                         <input type="date" id="due_date" name="due_date" class="input-field" 
-                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}" required>
+                               value="{{ old('due_date') }}">
                     </div>
 
                     <div class="input-group">
-                        <label for="priority" class="input-label">Prioridade*</label>
-                        <select id="priority" name="priority" class="input-field" required>
-                            <option value="" disabled {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }}>Selecione a prioridade</option>
-                            <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
-                            <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
-                            <option value="Baixa" {{ old('priority', isset($task) ? $task->priority : '') == "Baixa" ? 'selected' : '' }} class="priority-low">Baixa</option>
+                        <label for="priority" class="input-label">Prioridade</label>
+                        <select id="priority" name="priority" class="input-field">
+                            <option value="Baixa" selected class="priority-low">Baixa (padrão)</option>
+                            <option value="Alta" {{ old('priority') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
+                            <option value="Media" {{ old('priority') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
                         </select>
                     </div>
 
                     <button type="submit" class="btn-submit">
                         <i class="fas fa-save mr-2"></i>
-                        {{ isset($task) ? 'Atualizar Tarefa' : 'Criar Tarefa' }}
+                        Criar Tarefa
                     </button>
                 </form>
 
@@ -225,7 +227,7 @@
         </script>
     @endif
 
-    @if ($errors->any())
+    @if ($errors->any()))
         <script>
             Swal.fire({
                 icon: 'error',
@@ -238,15 +240,7 @@
     @endif
 
     <script>
-        // Set min date to today
         document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            const minDate = `${yyyy}-${mm}-${dd}`;
-            document.getElementById('due_date').setAttribute('min', minDate);
-
             // Initialize counters
             updateCharCounter('title', 50);
             updateCharCounter('description', 500);
@@ -274,10 +268,8 @@
             let isValid = true;
             const title = document.getElementById('title').value.trim();
             const description = document.getElementById('description').value.trim();
-            const dueDate = document.getElementById('due_date').value;
-            const priority = document.getElementById('priority').value;
             
-            // Title validation
+            // Title validation (only required field)
             if (!title) {
                 showError('title', 'O título é obrigatório');
                 isValid = false;
@@ -289,28 +281,6 @@
             // Description validation
             if (description.length > 500) {
                 showError('description', 'A descrição deve ter no máximo 500 caracteres');
-                isValid = false;
-            }
-            
-            // Due date validation
-            if (!dueDate) {
-                showError('due_date', 'A data limite é obrigatória');
-                isValid = false;
-            } else {
-                const today = new Date();
-                const selected = new Date(dueDate);
-                today.setHours(0,0,0,0); 
-                selected.setHours(0,0,0,0);
-                
-                if (selected < today) {
-                    showError('due_date', 'A data deve ser hoje ou no futuro');
-                    isValid = false;
-                }
-            }
-            
-            // Priority validation
-            if (!priority) {
-                showError('priority', 'A prioridade é obrigatória');
                 isValid = false;
             }
             
