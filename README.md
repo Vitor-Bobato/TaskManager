@@ -64,4 +64,4 @@ Este projeto está sob a licença MIT.
 
 ## ✉️ Contato
 
-Em caso de dúvidas ou sugestões, entre em contato pelo [GitHub](https://github.com/Vitor-Bobato) ou [GitHub](https://github.com/Pcgo24)
+Em caso de dúvidas ou sugestões, entre em contato com [Vitor](https://github.com/Vitor-Bobato) ou [Paulo](https://github.com/Pcgo24)
