@@ -14,71 +14,71 @@
             --primary-dark: #047857;
             --primary-light: #D1FAE5;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
             min-height: 100vh;
         }
-        
+
         .auth-container {
             animation: fadeInUp 0.6s ease;
         }
-        
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .auth-card {
             background: white;
             border-radius: 1rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
-        
+
         .auth-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 2rem;
             text-align: center;
         }
-        
+
         .auth-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        
+
         .auth-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        
+
         .auth-subtitle {
             font-size: 0.875rem;
             opacity: 0.9;
         }
-        
+
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
         }
-        
+
         .input-label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
         }
-        
+
         .input-field {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;
@@ -87,13 +87,13 @@
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
         }
-        
+
         .input-icon {
             position: absolute;
             left: 1rem;
@@ -101,7 +101,7 @@
             transform: translateY(-50%);
             color: #9CA3AF;
         }
-        
+
         .btn-submit {
             width: 100%;
             padding: 0.75rem;
@@ -117,16 +117,16 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-submit:active {
             transform: translateY(0);
         }
-        
+
         .btn-submit.loading::after {
             content: '';
             position: absolute;
@@ -137,7 +137,7 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             z-index: 1;
         }
-        
+
         .btn-submit.loading::before {
             content: '';
             position: absolute;
@@ -152,29 +152,29 @@
             animation: spin 1s linear infinite;
             z-index: 2;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .auth-footer {
             text-align: center;
             margin-top: 1.5rem;
             color: #6B7280;
         }
-        
+
         .auth-link {
             color: var(--primary);
             font-weight: 500;
             transition: all 0.2s ease;
         }
-        
+
         .auth-link:hover {
             color: var(--primary-dark);
             text-decoration: underline;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 1rem;
@@ -183,23 +183,23 @@
             color: #9CA3AF;
             cursor: pointer;
         }
-        
+
         .error-message {
             font-size: 0.75rem;
             color: #EF4444;
             margin-top: 0.25rem;
         }
-        
+
         .input-error {
             border-color: #EF4444 !important;
         }
-        
+
         .remember-me {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .remember-me input {
             margin-right: 0.5rem;
         }
@@ -215,7 +215,7 @@
                 <h1 class="auth-title">Bem-vindo de volta</h1>
                 <p class="auth-subtitle">Faça login para acessar suas tarefas</p>
             </div>
-            
+
             <div class="p-8">
                 <form method="POST" action="{{ route('login.store') }}" id="loginForm">
                     @csrf
@@ -295,30 +295,30 @@
         // Toggle password visibility
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
-        
+
         togglePassword.addEventListener('click', function() {
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
-        
+
         // Form submission with loading state
         const loginForm = document.getElementById('loginForm');
         const submitButton = document.getElementById('submitButton');
-        
+
         loginForm.addEventListener('submit', function(e) {
             let isValid = true;
-            
+
             // Clear previous errors
-            document.querySelectorAll('.input-error').forEach(el => {
+            document.querySelectorAll('.input-field').forEach(el => {
                 el.classList.remove('input-error');
             });
-            
-            document.querySelectorAll('.error-message').forEach(el => {
-                if (!el.id.includes('js_')) el.textContent = '';
+
+            document.querySelectorAll('.p.error-message').forEach(el => {
+                el.remove();
             });
-            
+
             // Email validation
             const email = document.getElementById('email').value.trim();
             if (!email) {
@@ -328,17 +328,17 @@
                 showError('email', 'Por favor, insira um email válido');
                 isValid = false;
             }
-            
+
             // Password validation
             const password = document.getElementById('password').value;
             if (!password) {
                 showError('password', 'A senha é obrigatória');
                 isValid = false;
             }
-            
+
             if (!isValid) {
                 e.preventDefault();
-                
+
                 // Scroll to first error
                 const firstError = document.querySelector('.input-error');
                 if (firstError) {
@@ -351,22 +351,48 @@
                 submitButton.setAttribute('disabled', 'disabled');
             }
         });
-        
+
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
-            field.classList.add('input-error');
-            
-            let errorElement = document.getElementById(`${fieldId}_error`);
-            if (errorElement) {
-                errorElement.textContent = message;
+            if (!field) {
+                console.error('Campo não encontrado para showError:', fieldId);
+                return;
             }
+
+            field.classList.add('input-error'); // Adiciona a borda vermelha (isso já está funcionando)
+
+            // Tenta encontrar o elemento de erro. Se não existir, cria um.
+            let errorElement = document.getElementById(`${fieldId}_error`);
+
+            if (!errorElement) {
+                errorElement = document.createElement('p');
+                errorElement.id = `${fieldId}_error`; // Mantém o padrão de ID para consistência
+                errorElement.className = 'error-message'; // Classe para estilização
+
+                // Insere o elemento de erro após o div 'relative' que contém o input.
+                // A estrutura no seu HTML é:
+                // <div class="input-group">
+                //   <label ...></label>
+                //   <div class="relative"> <input id="fieldId" ...> </div>
+                //   //   // </div>
+                let inputWrapper = field.parentElement; //  O <div class="relative">
+                if (inputWrapper && inputWrapper.classList.contains('relative')) {
+                    inputWrapper.parentElement.appendChild(errorElement); // Adiciona ao <div class="input-group">
+                } else {
+                    // Fallback se a estrutura for diferente: insere após o próprio campo
+                    field.parentNode.insertBefore(errorElement, field.nextSibling);
+                }
+            }
+
+            errorElement.textContent = message;
+            errorElement.style.display = 'block'; // Garante que esteja visível
         }
-        
+
         // Auto-focus email field if empty, otherwise password
         document.addEventListener('DOMContentLoaded', function() {
             const emailField = document.getElementById('email');
             const passwordField = document.getElementById('password');
-            
+
             if (emailField.value === '') {
                 emailField.focus();
             } else {

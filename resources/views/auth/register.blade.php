@@ -15,71 +15,71 @@
             --primary-light: #D1FAE5;
             --secondary: #3B82F6;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
             min-height: 100vh;
         }
-        
+
         .auth-container {
             animation: fadeInUp 0.6s ease;
         }
-        
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .auth-card {
             background: white;
             border-radius: 1rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
-        
+
         .auth-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 2rem;
             text-align: center;
         }
-        
+
         .auth-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             animation: bounce 2s infinite;
         }
-        
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-15px); }
             60% { transform: translateY(-7px); }
         }
-        
+
         .auth-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        
+
         .auth-subtitle {
             font-size: 0.875rem;
             opacity: 0.9;
         }
-        
+
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
         }
-        
+
         .input-label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
         }
-        
+
         .input-field {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;
@@ -88,13 +88,13 @@
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
         }
-        
+
         .input-icon {
             position: absolute;
             left: 1rem;
@@ -102,7 +102,7 @@
             transform: translateY(-50%);
             color: #9CA3AF;
         }
-        
+
         .btn-submit {
             width: 100%;
             padding: 0.75rem;
@@ -118,16 +118,16 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-submit:active {
             transform: translateY(0);
         }
-        
+
         .btn-submit::after {
             content: '';
             position: absolute;
@@ -141,11 +141,11 @@
             transform: scale(1, 1) translate(-50%);
             transform-origin: 50% 50%;
         }
-        
+
         .btn-submit:focus:not(:active)::after {
             animation: ripple 1s ease-out;
         }
-        
+
         @keyframes ripple {
             0% {
                 transform: scale(0, 0);
@@ -156,24 +156,24 @@
                 opacity: 0;
             }
         }
-        
+
         .auth-footer {
             text-align: center;
             margin-top: 1.5rem;
             color: #6B7280;
         }
-        
+
         .auth-link {
             color: var(--primary);
             font-weight: 500;
             transition: all 0.2s ease;
         }
-        
+
         .auth-link:hover {
             color: var(--primary-dark);
             text-decoration: underline;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 1rem;
@@ -182,13 +182,13 @@
             color: #9CA3AF;
             cursor: pointer;
         }
-        
+
         .error-message {
             font-size: 0.75rem;
             color: #EF4444;
             margin-top: 0.25rem;
         }
-        
+
         .input-error {
             border-color: #EF4444 !important;
         }
@@ -204,7 +204,7 @@
                 <h1 class="auth-title">Criar uma conta</h1>
                 <p class="auth-subtitle">Comece a gerenciar suas tarefas agora mesmo</p>
             </div>
-            
+
             <div class="p-8">
                 <form method="POST" action="{{ route('register.store') }}" id="registerForm">
                     @csrf
@@ -308,37 +308,36 @@
         // Toggle password visibility
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
-        
+
         const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
         const passwordConfirmation = document.querySelector('#password_confirmation');
-        
+
         togglePassword.addEventListener('click', function() {
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
-        
+
         togglePasswordConfirmation.addEventListener('click', function() {
             const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordConfirmation.setAttribute('type', type);
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
-        
+
         // Form validation
         document.getElementById('registerForm').addEventListener('submit', function(e) {
-            let isValid = true;
-            
             // Clear previous errors
-            document.querySelectorAll('.input-error').forEach(el => {
+            document.querySelectorAll('.input-field').forEach(el => {
                 el.classList.remove('input-error');
             });
-            
-            document.querySelectorAll('.error-message').forEach(el => {
-                if (!el.id.includes('js_')) el.textContent = '';
+
+            document.querySelectorAll('.p.error-message').forEach(el => {
+                el.remove();
             });
-            
+            let isValid = true;
+
             // Name validation
             const name = document.getElementById('nome_completo').value.trim();
             if (!name) {
@@ -348,7 +347,7 @@
                 showError('nome_completo', 'O nome deve ter pelo menos 3 caracteres');
                 isValid = false;
             }
-            
+
             // Email validation
             const email = document.getElementById('email').value.trim();
             if (!email) {
@@ -358,27 +357,47 @@
                 showError('email', 'Por favor, insira um email válido');
                 isValid = false;
             }
-            
+
             // Password validation
-            const password = document.getElementById('password').value;
-            if (!password) {
-                showError('password', 'A senha é obrigatória');
+            const passwordField = document.getElementById('password');
+            const passwordValue = passwordField.value;
+            const passwordErrorField = 'password'; // ID do campo para exibir o erro
+
+            if (!passwordValue) {
+                showError(passwordErrorField, 'A senha é obrigatória');
                 isValid = false;
-            } else if (password.length < 6) {
-                showError('password', 'A senha deve ter pelo menos 6 caracteres');
+            } else if (passwordValue.length < 8) { // Corrigido: length
+                showError(passwordErrorField, 'A senha deve ter pelo menos 8 caracteres');
+                isValid = false;
+            } else if (!/[A-Z]/.test(passwordValue)) {
+                showError(passwordErrorField, 'A senha deve conter pelo menos uma letra maiúscula (A-Z)');
+                isValid = false;
+            } else if (!/[a-z]/.test(passwordValue)) {
+                showError(passwordErrorField, 'A senha deve conter pelo menos uma letra minúscula (a-z)');
+                isValid = false;
+            } else if (!/\d/.test(passwordValue)) { // Equivalente a !/[0-9]/.test(passwordValue)
+                showError(passwordErrorField, 'A senha deve conter pelo menos um número (0-9)');
+                isValid = false;
+            } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(passwordValue)) {
+                showError(passwordErrorField, 'A senha deve conter pelo menos um caractere especial (ex: !@#$%)');
                 isValid = false;
             }
-            
-            // Password confirmation
-            const passwordConfirmation = document.getElementById('password_confirmation').value;
-            if (password !== passwordConfirmation) {
-                showError('password_confirmation', 'As senhas não coincidem');
+
+            const passwordConfirmationValue = document.getElementById('password_confirmation').value;
+            if (isValid && !passwordConfirmationValue && passwordValue) { // Só checa se a senha passou nas validações anteriores e foi preenchida
+                showError('password_confirmation', 'A confirmação da senha é obrigatória.');
                 isValid = false;
+            } else if (passwordValue !== passwordConfirmationValue) {
+
+                if (passwordValue && passwordConfirmationValue) { // Mostra apenas se ambos os campos estiverem preenchidos
+                    showError('password_confirmation', 'As senhas não coincidem');
+                    isValid = false;
+                }
             }
-            
+
             if (!isValid) {
                 e.preventDefault();
-                
+
                 // Scroll to first error
                 const firstError = document.querySelector('.input-error');
                 if (firstError) {
@@ -386,15 +405,41 @@
                 }
             }
         });
-        
+
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
-            field.classList.add('input-error');
-            
-            let errorElement = document.getElementById(`${fieldId}_error`);
-            if (errorElement) {
-                errorElement.textContent = message;
+            if (!field) {
+                console.error('Campo não encontrado para showError:', fieldId);
+                return;
             }
+
+            field.classList.add('input-error'); // Adiciona a borda vermelha (isso já está funcionando)
+
+            // Tenta encontrar o elemento de erro. Se não existir, cria um.
+            let errorElement = document.getElementById(`${fieldId}_error`);
+
+            if (!errorElement) {
+                errorElement = document.createElement('p');
+                errorElement.id = `${fieldId}_error`; // Mantém o padrão de ID para consistência
+                errorElement.className = 'error-message'; // Classe para estilização
+
+                // Insere o elemento de erro após o div 'relative' que contém o input.
+                // A estrutura no seu HTML é:
+                // <div class="input-group">
+                //   <label ...></label>
+                //   <div class="relative"> <input id="fieldId" ...> </div>
+                //   //   // </div>
+                let inputWrapper = field.parentElement; //  O <div class="relative">
+                if (inputWrapper && inputWrapper.classList.contains('relative')) {
+                    inputWrapper.parentElement.appendChild(errorElement); // Adiciona ao <div class="input-group">
+                } else {
+                    // Fallback se a estrutura for diferente: insere após o próprio campo
+                    field.parentNode.insertBefore(errorElement, field.nextSibling);
+                }
+            }
+
+            errorElement.textContent = message;
+            errorElement.style.display = 'block'; // Garante que esteja visível
         }
     </script>
 </body>

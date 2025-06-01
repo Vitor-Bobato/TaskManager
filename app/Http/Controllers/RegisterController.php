@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator; // Opcional: se preferir usar Validator::make() explicitamente
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth; // Para login automático, se desejar
 
 class RegisterController extends Controller
@@ -28,12 +28,19 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        // Validação dos dados recebidos
-        // Usando o método validate() do Request, que é bem prático.
         $validatedData = $request->validate([
             'nome_completo' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols(),
+                'confirmed'
+            ],
         ], [
             // Mensagens de erro personalizadas
             'nome_completo.required' => 'O nome completo é obrigatório.',
@@ -46,6 +53,10 @@ class RegisterController extends Controller
             'password.required' => 'A senha é obrigatória.',
             'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
             'password.confirmed' => 'A confirmação da senha não coincide.',
+            'password.mixedCase' => 'A senha deve conter letras maiúsculas e minúsculas.',
+            'password.numbers' => 'A senha deve conter pelo menos um número.',
+            'password.symbols' => 'A senha deve conter pelo menos um símbolo.',
+            'password.letters' => 'A senha deve conter pelo menos uma letra.',
         ]);
 
         // Criação do usuário
