@@ -1,181 +1,151 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <title>TaskManager - Sistema de Controle de Tarefas</title>
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f7fafc;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #ece9f7 0%, #d1cfe2 100%);
+      color: #22223b;
       margin: 0;
       padding: 0;
-      color: #222;
     }
     .container {
-      max-width: 780px;
+      max-width: 900px;
       margin: 40px auto;
+      padding: 32px 40px;
       background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.08);
-      padding: 38px 32px 32px 32px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(44, 44, 62, 0.13);
     }
-    h1 {
-      font-size: 2.5rem;
-      color: #3f51b5;
-      margin-bottom: 4px;
-      letter-spacing: 1px;
+    h1, h2, h3 {
+      color: #5f4b8b;
+      margin-top: 0;
     }
-    .subtitle {
-      color: #6b7280;
+    h1 span {
+      font-size: 0.65em;
+      color: #3d375e;
+      font-weight: 400;
+    }
+    .badges {
       margin-bottom: 24px;
-      font-size: 1.15rem;
-      border-left: 4px solid #3f51b5;
-      padding-left: 10px;
     }
-    h2 {
-      color: #3f51b5;
-      margin-top: 2.2em;
-      margin-bottom: 1em;
-      font-size: 1.4rem;
-      letter-spacing: .5px;
+    .badge {
+      display: inline-block;
+      background: #5f4b8b;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      padding: 3px 14px;
+      margin-right: 7px;
+      margin-bottom: 3px;
+      text-decoration: none;
+    }
+    pre {
+      background: #f7f7fb;
+      color: #22223b;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      overflow-x: auto;
+    }
+    code {
+      background: #f3f0fa;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 15px;
     }
     ul {
-      margin: 0 0 1.2em 1.2em;
-      padding: 0;
       line-height: 1.7;
-    }
-    ol {
-      margin: 0 0 1.2em 1.2em;
-      padding: 0;
-      line-height: 1.7;
-    }
-    code, pre {
-      background: #f0f4f8;
-      border-radius: 5px;
-      padding: 2px 8px;
-      color: #1a202c;
-    }
-    .authors {
-      display: flex;
-      gap: 2em;
-      margin-top: 20px;
-    }
-    .author-card {
-      background: #eff6ff;
-      border-radius: 8px;
-      padding: 14px 20px;
-      min-width: 170px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(63,81,181,.07);
-    }
-    .author-card strong {
-      color: #3f51b5;
-      font-size: 1.07em;
-      letter-spacing: .7px;
-    }
-    .license {
-      background: #f7fafc;
-      border-left: 4px solid #3f51b5;
-      padding: 12px 16px;
-      font-size: 1.02em;
-      margin-top: 18px;
-      color: #555;
-    }
-    .tech-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-      margin-bottom: 1.4em;
-    }
-    .tech-item {
-      background: #e3eafc;
-      color: #223;
-      border-radius: 8px;
-      padding: 6px 16px;
-      font-weight: 500;
-      font-size: 1em;
-      box-shadow: 0 1px 4px rgba(63,81,181,.07);
     }
     a {
-      color: #3f51b5;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    a:hover {
+      color: #5f4b8b;
       text-decoration: underline;
     }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #aba7c3;
+    }
     @media (max-width: 700px) {
-      .container { padding: 16px 6vw; }
-      .authors { flex-direction: column; gap: 1em; }
+      .container { padding: 18px 4vw; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>📋 TaskManager</h1>
-    <div class="subtitle">
-      Sistema de controle de tarefas e compromissos — Projeto final da disciplina <b>Desenvolvimento Web Mobile III</b>.
+    <h1>
+      TaskManager <span>• Sistema de Controle de Tarefas e Compromissos</span>
+    </h1>
+
+    <div class="badges">
+      <span class="badge">PHP</span>
+      <span class="badge">Blade</span>
+      <span class="badge">JavaScript</span>
+      <span class="badge">CSS</span>
+      <span class="badge">Mobile Web</span>
     </div>
 
-    <h2>🌟 Visão Geral</h2>
     <p>
-      O <b>TaskManager</b> é uma aplicação web desenvolvida para ajudar você a organizar tarefas e compromissos do seu dia a dia com praticidade e eficiência. Cadastre, edite e acompanhe o progresso de suas atividades de forma simples, visual e moderna.
+      O <b>TaskManager</b> é um sistema moderno para controle de tarefas e compromissos, desenvolvido para a disciplina de <i>Desenvolvimento Web Mobile III</i>. Ele permite que usuários gerenciem suas atividades diárias de forma fácil, intuitiva e responsiva.
     </p>
 
-    <h2>🚦 Funcionalidades Principais</h2>
+    <h2>🚀 Principais Funcionalidades</h2>
     <ul>
-      <li>Adicionar, editar e excluir tarefas</li>
-      <li>Listagem clara de todas as tarefas</li>
-      <li>Marcar tarefas como concluídas</li>
-      <li>Interface limpa, responsiva e intuitiva</li>
-      <li>Filtros para visualizar pendências e concluídas</li>
+      <li>✅ Cadastro, edição e exclusão de tarefas</li>
+      <li>⏰ Acompanhamento de prazos e status</li>
+      <li>📅 Visualização de agenda</li>
+      <li>🔍 Filtros e busca de tarefas</li>
+      <li>📱 Layout responsivo para dispositivos móveis</li>
     </ul>
 
-    <h2>🛠️ Tecnologias Utilizadas</h2>
-    <div class="tech-list">
-      <div class="tech-item">PHP</div>
-      <div class="tech-item">Blade (Laravel)</div>
-      <div class="tech-item">JavaScript</div>
-      <div class="tech-item">CSS</div>
-    </div>
+    <h2>📦 Tecnologias Utilizadas</h2>
+    <ul>
+      <li><b>PHP</b> – Backend e lógica de negócio</li>
+      <li><b>Blade</b> – Template engine do Laravel</li>
+      <li><b>JavaScript</b> – Interatividade e dinamicidade no front-end</li>
+      <li><b>CSS</b> – Estilização moderna e responsiva</li>
+    </ul>
 
-    <h2>🚀 Como Rodar o Projeto</h2>
+    <h2>🔧 Como Rodar o Projeto</h2>
     <ol>
-      <li>Clone este repositório:<br>
-        <code>git clone https://github.com/Vitor-Bobato/TaskManager.git</code>
+      <li>Clone o repositório:
+        <pre><code>git clone https://github.com/Vitor-Bobato/TaskManager.git</code></pre>
       </li>
-      <li>Entre no diretório do projeto:<br>
-        <code>cd TaskManager</code>
+      <li>Instale as dependências do PHP e front-end (Laravel, Composer, NPM/Yarn):<br>
+        <pre><code>cd TaskManager
+composer install
+npm install
+npm run dev</code></pre>
       </li>
-      <li>Instale as dependências (Composer):<br>
-        <code>composer install</code>
+      <li>Configure o arquivo <code>.env</code> com suas informações de banco de dados e execute as migrations:
+        <pre><code>php artisan migrate</code></pre>
       </li>
-      <li>Configure o arquivo <code>.env</code> com os dados do seu banco de dados.</li>
-      <li>Execute as migrations (caso utilize Laravel):<br>
-        <code>php artisan migrate</code>
+      <li>Inicie o servidor de desenvolvimento:
+        <pre><code>php artisan serve</code></pre>
       </li>
-      <li>Inicie o servidor:<br>
-        <code>php artisan serve</code>
-      </li>
-      <li>
-        Acesse <a href="http://localhost:8000" target="_blank">http://localhost:8000</a> no seu navegador.
-      </li>
+      <li>Acesse <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
     </ol>
 
-    <h2>👨‍💻 Autores</h2>
-    <div class="authors">
-      <div class="author-card">
-        <strong>Vitor Bobato</strong><br>
-        <a href="https://github.com/Vitor-Bobato" target="_blank">@Vitor-Bobato</a>
-      </div>
-      <div class="author-card">
-        <strong>Paulo Cesar Cardoso Domingues</strong>
-      </div>
-    </div>
+    <h2>👨‍💻 Contribuição</h2>
+    <ul>
+      <li>Fork este repositório</li>
+      <li>Crie uma branch para sua feature (<code>git checkout -b minha-feature</code>)</li>
+      <li>Commit suas alterações (<code>git commit -m 'feat: minha nova feature'</code>)</li>
+      <li>Abra um Pull Request</li>
+    </ul>
 
     <h2>📄 Licença</h2>
-    <div class="license">
-      Este projeto tem fins exclusivamente acadêmicos e não possui licença comercial.
+    <p>Este projeto foi desenvolvido para fins acadêmicos e está sob a licença <b>MIT</b>.</p>
+
+    <div class="footer">
+      <hr>
+      <p>
+        Desenvolvido por <b>Vitor Bobato</b> para a disciplina de Desenvolvimento Web Mobile III.<br>
+        <a href="https://github.com/Vitor-Bobato/TaskManager" target="_blank">Repositório no GitHub</a>
+      </p>
     </div>
   </div>
 </body>
