@@ -53,7 +53,7 @@ O **TaskManager** é uma aplicação web desenvolvida em PHP (Laravel) com Blade
     php artisan serve
     ```
 
-## 👤 Autor
+## 👤 Autores
 
 - [Vitor Bobato](https://github.com/Vitor-Bobato)
 - [Paulo Cesar C. Domingues](https://github.com/Pcgo24)
