@@ -174,31 +174,31 @@
                     <div class="input-group">
                         <label for="title" class="input-label required">Título da Tarefa</label>
                         <input type="text" id="title" name="title" class="input-field" 
-                               value="{{ old('title', isset($task) ? $task->title : '' }}" 
+                               value="{{ old('title', isset($task) ? $task->title : '') }}" 
                                maxlength="50" required autocomplete="off" 
                                oninput="updateCharCounter('title', 50)">
                         <div class="char-counter" id="counter-title">0/50</div>
                     </div>
 
                     <div class="input-group">
-                        <label for="description" class="input-label">Descrição</label>
+                        <label for="description" class="input-label">Descrição (opcional)</label>
                         <textarea id="description" name="description" class="input-field" rows="4"
                                   maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description', isset($task) ? $task->description : '') }}</textarea>
                         <div class="char-counter" id="counter-description">0/500</div>
                     </div>
 
                     <div class="input-group">
-                        <label for="due_date" class="input-label">Data Limite</label>
+                        <label for="due_date" class="input-label">Data Limite (opcional)</label>
                         <input type="date" id="due_date" name="due_date" class="input-field" 
-                               value="{{ old('due_date', isset($task) ? $task->due_date : '' }}">
+                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}">
                     </div>
 
                     <div class="input-group">
-                        <label for="priority" class="input-label">Prioridade</label>
+                        <label for="priority" class="input-label">Prioridade (opcional)</label>
                         <select id="priority" name="priority" class="input-field">
-                            <option value="Baixa" {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }} class="priority-low">Baixa (padrão)</option>
-                            <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
-                            <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
+                            <option value="Baixa" {{ old('priority', isset($task) ? $task->priority : 'Baixa') == 'Baixa' ? 'selected' : '' }} class="priority-low">Baixa (padrão)</option>
+                            <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == 'Alta' ? 'selected' : '' }} class="priority-high">Alta</option>
+                            <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == 'Media' ? 'selected' : '' }} class="priority-medium">Média</option>
                         </select>
                     </div>
 
@@ -230,7 +230,7 @@
         </script>
     @endif
 
-    @if ($errors->any())
+    @if ($errors->any()))
         <script>
             Swal.fire({
                 icon: 'error',
@@ -315,4 +315,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
