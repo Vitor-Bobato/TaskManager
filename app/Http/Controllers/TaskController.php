@@ -24,28 +24,32 @@ class TaskController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate
-        ([
-            'title' => ['required', 'regex:/[A-Za-zÀ-ÿ]/', 'max:255'],
-            'description' => ['required', 'regex:/[A-Za-zÀ-ÿ]/'],
-            'due_date' => 'nullable|date',
-            'priority' => 'required|in:Alta,Media,Baixa',
-        ]);
+{
+    $request->validate([
+        'title' => ['required', 'string', 'max:255'], // Obrigatório e máximo 255 caracteres
+        'description' => ['nullable', 'string'], // Opcional (nullable) e tipo string
+        'due_date' => 'nullable|date', // Opcional
+        'priority' => 'required|in:Alta,Media,Baixa', // Obrigatório
+    ]);
 
-        $data = $request->all();
-        if (empty($data['due_date'])) {
-            $data['due_date'] = null;
-        }
-
-        $task = Task::create($data);
-
-        Log::info('Tarefa criada', ['id' => $task->id, 'title' => $task->title]);
-
-
-        return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso!');
+    $data = $request->all();
+    
+    // Garante que due_date seja null se vazio
+    if (empty($data['due_date'])) {
+        $data['due_date'] = null;
     }
 
+    // Define prioridade padrão como 'Baixa' se não for informada
+    if (empty($data['priority'])) {
+        $data['priority'] = 'Baixa';
+    }
+
+    $task = Task::create($data);
+
+    Log::info('Tarefa criada', ['id' => $task->id, 'title' => $task->title]);
+
+    return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso!');
+}
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
