@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+//        $tasks = Task::all();
 
-        Log::info('Listagem de tarefas acessada', ['quantidade' => $tasks->count()]);
 
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Você precisa estar logado para acessar as tarefas.');
+        }
+        $tasks = $user->tasks()->orderBy('created_at', 'desc')->get();
+
+        Log::info('Listagem de tarefas acessada', ['user_id' => $user->id, 'quantidade' => $tasks->count()]);
 
         return view('tasks.index', compact('tasks'));
     }
@@ -39,9 +46,9 @@ class TaskController extends Controller
             'priority.in' => 'A prioridade deve ser uma das seguintes opções: Alta, Media, Baixa.',
         ]);
 
-        $task = Task::create($validatedData);
+        $task = Auth::user()->tasks()->create($validatedData);
 
-        Log::info('Tarefa criada', ['id' => $task->id, 'title' => $task->title]);
+        Log::info('Tarefa criada', ['user_id' => Auth::id(), 'id' => $task->id, 'title' => $task->title]);
 
 
         return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso!');
@@ -50,6 +57,9 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
+        if (Auth::id() !== $task->user_id) {
+            return redirect()->route('tasks.index')->with('error', 'Você não tem permissão para excluir esta tarefa.');
+        }
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Tarefa excluída com sucesso!');
@@ -57,11 +67,20 @@ class TaskController extends Controller
 
     public function edit($id) {
     $task = Task::findOrFail($id);
+
+    if (Auth::id() !== $task->user_id) {
+        return redirect()->route('tasks.index')->with('error', 'Você não tem permissão para editar esta tarefa.');
+    }
+
     return view('tasks.edit', compact('task'));
 }
 
 public function update(Request $request, $id) {
     $task = Task::findOrFail($id);
+
+    if (Auth::id() !== $task->user_id) {
+        return redirect()->route('tasks.index')->with('error', 'Você não tem permissão para editar esta tarefa.');
+    }
     // Validação dos dados
     $validatedData = $request->validate([
         'title' => ['sometimes', 'required', 'string', 'max:255'],

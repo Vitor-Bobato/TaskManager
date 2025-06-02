@@ -273,7 +273,7 @@
         document.getElementById('taskForm').addEventListener('submit', function(e) {
             let isValid = true;
 
-            document.querySelectorAll('.input-error').forEach(el.classList.remove('input-error'));
+            document.querySelectorAll('.input-field.input-error').forEach(el => el.classList.remove('input-error'));
             document.querySelectorAll('.error-message-js').forEach(el => el.remove());
 
             const title = document.getElementById('title').value.trim();
@@ -300,7 +300,7 @@
                 const today = new Date();
                 const selected = new Date (dueDate);
                 today.setHours (0, 0, 0, 0);
-                const selectedDataUTC = new Data (selected.getUTCFullYear(), selected.getUTCMonth(), selected.getUTCDate());
+                const selectedDataUTC = new Date (selected.getUTCFullYear(), selected.getUTCMonth(), selected.getUTCDate());
 
                 if (selectedDateUTC < today)
                 {

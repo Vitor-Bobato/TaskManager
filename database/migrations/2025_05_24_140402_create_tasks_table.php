@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id'); // Coluna para o ID do usuário
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('due_date')->nullable();
             $table->enum('priority', ['Alta', 'Media', 'Baixa']) -> default('Baixa');
             $table->timestamps();
+
+            // Chave estrangeira para o usuário
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade'); // Excluir tarefas se o usuário for excluído
         });
     }
 
