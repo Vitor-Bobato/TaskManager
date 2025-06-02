@@ -223,10 +223,10 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="email" class="input-label">Email</label>
+                        <label for="text" class="input-label">Email</label>
                         <div class="relative">
                             <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                            <input type="text" id="email" name="email" value="{{ old('email') }}"
                                    class="input-field @error('email') input-error @enderror"
                                    aria-describedby="email_error">
                         </div>
@@ -305,141 +305,161 @@
     @endif
 
     <script>
-        // Toggle password visibility
+        // Toggle password visibility (SEU CÓDIGO ORIGINAL - MANTIDO)
         const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
-
+        const passwordInputEl = document.querySelector('#password'); // Renomeado para clareza
         const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
-        const passwordConfirmation = document.querySelector('#password_confirmation');
+        const passwordConfirmationInputEl = document.querySelector('#password_confirmation'); // Renomeado
 
-        togglePassword.addEventListener('click', function() {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        togglePasswordConfirmation.addEventListener('click', function() {
-            const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordConfirmation.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // Form validation
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            // Clear previous errors
-            document.querySelectorAll('.input-field').forEach(el => {
-                el.classList.remove('input-error');
+        if (togglePassword && passwordInputEl) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInputEl.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInputEl.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
+        }
 
-            document.querySelectorAll('.p.error-message').forEach(el => {
-                el.remove();
+        if (togglePasswordConfirmation && passwordConfirmationInputEl) {
+            togglePasswordConfirmation.addEventListener('click', function() {
+                const type = passwordConfirmationInputEl.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordConfirmationInputEl.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
-            let isValid = true;
+        }
 
-            // Name validation
-            const name = document.getElementById('nome_completo').value.trim();
-            if (!name) {
-                showError('nome_completo', 'O nome completo é obrigatório');
-                isValid = false;
-            } else if (name.length < 3) {
-                showError('nome_completo', 'O nome deve ter pelo menos 3 caracteres');
-                isValid = false;
-            }
-
-            // Email validation
-            const email = document.getElementById('email').value.trim();
-            if (!email) {
-                showError('email', 'O email é obrigatório');
-                isValid = false;
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError('email', 'Por favor, insira um email válido');
-                isValid = false;
-            }
-
-            // Password validation
-            const passwordField = document.getElementById('password');
-            const passwordValue = passwordField.value;
-            const passwordErrorField = 'password'; // ID do campo para exibir o erro
-
-            if (!passwordValue) {
-                showError(passwordErrorField, 'A senha é obrigatória');
-                isValid = false;
-            } else if (passwordValue.length < 8) { // Corrigido: length
-                showError(passwordErrorField, 'A senha deve ter pelo menos 8 caracteres');
-                isValid = false;
-            } else if (!/[A-Z]/.test(passwordValue)) {
-                showError(passwordErrorField, 'A senha deve conter pelo menos uma letra maiúscula (A-Z)');
-                isValid = false;
-            } else if (!/[a-z]/.test(passwordValue)) {
-                showError(passwordErrorField, 'A senha deve conter pelo menos uma letra minúscula (a-z)');
-                isValid = false;
-            } else if (!/\d/.test(passwordValue)) { // Equivalente a !/[0-9]/.test(passwordValue)
-                showError(passwordErrorField, 'A senha deve conter pelo menos um número (0-9)');
-                isValid = false;
-            } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(passwordValue)) {
-                showError(passwordErrorField, 'A senha deve conter pelo menos um caractere especial (ex: !@#$%)');
-                isValid = false;
-            }
-
-            const passwordConfirmationValue = document.getElementById('password_confirmation').value;
-            if (isValid && !passwordConfirmationValue && passwordValue) { // Só checa se a senha passou nas validações anteriores e foi preenchida
-                showError('password_confirmation', 'A confirmação da senha é obrigatória.');
-                isValid = false;
-            } else if (passwordValue !== passwordConfirmationValue) {
-
-                if (passwordValue && passwordConfirmationValue) { // Mostra apenas se ambos os campos estiverem preenchidos
-                    showError('password_confirmation', 'As senhas não coincidem');
-                    isValid = false;
-                }
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-
-                // Scroll to first error
-                const firstError = document.querySelector('.input-error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
-
+        // Função showError ATUALIZADA para criar o elemento de erro se não existir
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
             if (!field) {
                 console.error('Campo não encontrado para showError:', fieldId);
                 return;
             }
-
-            field.classList.add('input-error'); // Adiciona a borda vermelha (isso já está funcionando)
-
-            // Tenta encontrar o elemento de erro. Se não existir, cria um.
-            let errorElement = document.getElementById(`${fieldId}_error`);
-
+            field.classList.add('input-error');
+            let errorElement = document.getElementById(`${fieldId}_error`); // Usa _error
             if (!errorElement) {
                 errorElement = document.createElement('p');
-                errorElement.id = `${fieldId}_error`; // Mantém o padrão de ID para consistência
-                errorElement.className = 'error-message'; // Classe para estilização
-
-                // Insere o elemento de erro após o div 'relative' que contém o input.
-                // A estrutura no seu HTML é:
-                // <div class="input-group">
-                //   <label ...></label>
-                //   <div class="relative"> <input id="fieldId" ...> </div>
-                //   //   // </div>
-                let inputWrapper = field.parentElement; //  O <div class="relative">
+                errorElement.id = `${fieldId}_error`; // Usa _error
+                errorElement.className = 'error-message';
+                let inputWrapper = field.parentElement;
                 if (inputWrapper && inputWrapper.classList.contains('relative')) {
-                    inputWrapper.parentElement.appendChild(errorElement); // Adiciona ao <div class="input-group">
+                    if (inputWrapper.parentElement && inputWrapper.parentElement.classList.contains('input-group')) {
+                        inputWrapper.parentElement.appendChild(errorElement);
+                    } else {
+                        inputWrapper.appendChild(errorElement);
+                    }
                 } else {
-                    // Fallback se a estrutura for diferente: insere após o próprio campo
                     field.parentNode.insertBefore(errorElement, field.nextSibling);
                 }
             }
-
             errorElement.textContent = message;
-            errorElement.style.display = 'block'; // Garante que esteja visível
+            errorElement.style.display = 'block';
+        }
+
+        // Form validation
+        if (document.getElementById('registerForm')) {
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                // Limpar classes de erro dos inputs
+                document.querySelectorAll('.input-field').forEach(el => {
+                    el.classList.remove('input-error');
+                });
+                // Limpar mensagens de erro (removendo os elementos <p>)
+                document.querySelectorAll('p.error-message').forEach(el => {
+                    el.remove();
+                });
+
+                let isValid = true;
+                let specificErrorMessages = []; // Para o SweetAlert (se você decidir reativá-lo)
+
+                function processFieldValidation(fieldId, condition, errorMessage) {
+                    if (condition) {
+                        showError(fieldId, errorMessage);
+                        if (!specificErrorMessages.includes(errorMessage)) {
+                            specificErrorMessages.push(errorMessage);
+                        }
+                        isValid = false;
+                    }
+                }
+
+                // Name validation
+                const name = document.getElementById('nome_completo').value.trim();
+                processFieldValidation('nome_completo', !name, 'O nome completo é obrigatório');
+                if (name) { // Só checa min se o nome não estiver vazio
+                    processFieldValidation('nome_completo', name.length < 3, 'O nome completo deve ter pelo menos 3 caracteres');
+                }
+                // Validação de MAX length para nome (client-side opcional, backend já tem)
+                // if (name.length > 255) { processFieldValidation('nome_completo', true, 'O nome completo não pode exceder 255 caracteres.');}
+
+
+                // Email validation
+                const email = document.getElementById('email').value.trim();
+                processFieldValidation('email', !email, 'O email é obrigatório');
+                if (email) { // Só checa formato se o email não estiver vazio
+                    processFieldValidation('email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), 'Por favor, insira um email válido');
+                }
+                // Validação de MAX length para email (client-side opcional, backend já tem)
+                // if (email.length > 255) { processFieldValidation('email', true, 'O email não pode exceder 255 caracteres.');}
+
+                // Password validation (com todas as regras de complexidade)
+                const passwordValue = passwordInputEl.value; // Usa a variável do escopo externo
+                const passwordErrorFieldId = 'password';
+                processFieldValidation(passwordErrorFieldId, !passwordValue, 'A senha é obrigatória');
+                if (passwordValue) {
+                    // Para o SweetAlert listar todos os erros de senha, cada um seria um 'if' separado.
+                    // Para inline, showError sobrescreve, então a primeira mensagem de erro é a que fica.
+                    // Vamos manter a lógica de "primeiro erro encontrado" para o inline, que o else if faz.
+                    if (passwordValue.length < 8) {
+                        processFieldValidation(passwordErrorFieldId, true, 'A senha deve ter pelo menos 8 caracteres');
+                    } else if (!/[A-Z]/.test(passwordValue)) {
+                        processFieldValidation(passwordErrorFieldId, true, 'A senha deve conter pelo menos uma letra maiúscula (A-Z)');
+                    } else if (!/[a-z]/.test(passwordValue)) {
+                        processFieldValidation(passwordErrorFieldId, true, 'A senha deve conter pelo menos uma letra minúscula (a-z)');
+                    } else if (!/\d/.test(passwordValue)) {
+                        processFieldValidation(passwordErrorFieldId, true, 'A senha deve conter pelo menos um número (0-9)');
+                    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(passwordValue)) {
+                        processFieldValidation(passwordErrorFieldId, true, 'A senha deve conter pelo menos um caractere especial (ex: !@#$%)');
+                    }
+                }
+
+                // Password Confirmation validation
+                const passwordConfirmationValue = passwordConfirmationInputEl.value; // Usa a variável do escopo externo
+                if (passwordValue) { // Só valida confirmação se a senha principal foi digitada
+                    processFieldValidation('password_confirmation', !passwordConfirmationValue, 'A confirmação da senha é obrigatória.'); // << CORRIGIDO para mensagem correta
+                    if (passwordConfirmationValue) { // Só checa se são diferentes se a confirmação foi preenchida
+                        processFieldValidation('password_confirmation', passwordValue !== passwordConfirmationValue, 'As senhas não coincidem');
+                    }
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    const firstErrorField = document.querySelector('.input-error');
+                    if (firstErrorField) {
+                        let elementToScrollTo = document.getElementById(`${firstErrorField.id}_error`) || firstErrorField;
+                        if(elementToScrollTo) elementToScrollTo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    // Se você quiser o SweetAlert com a lista de erros, descomente o bloco abaixo
+                    /*
+                    let sweetAlertContentHtml = 'Por favor, corrija os seguintes erros:<br><ul style="text-align: left; margin-top: 10px; list-style-position: inside; padding-left: 20px;">';
+                    if (specificErrorMessages.length > 0) {
+                        specificErrorMessages.forEach(msg => {
+                            sweetAlertContentHtml += `<li>${msg}</li>`;
+                        });
+                        sweetAlertContentHtml += '</ul>';
+                    } else {
+                        sweetAlertContentHtml = 'Por favor, corrija os erros indicados no formulário.';
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Formulário Inválido!',
+                        html: sweetAlertContentHtml,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'var(--primary)',
+                        background: 'white'
+                    });
+                    */
+                }
+            });
         }
     </script>
 </body>
