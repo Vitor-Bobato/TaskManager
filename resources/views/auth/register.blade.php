@@ -214,6 +214,7 @@
                         <div class="relative">
                             <i class="fas fa-user input-icon"></i>
                             <input type="text" id="nome_completo" name="nome_completo" value="{{ old('nome_completo') }}"
+                                   maxlength="256"  autocomplete="off"
                                    class="input-field @error('nome_completo') input-error @enderror"
                                    aria-describedby="nome_completo_error">
                         </div>
@@ -227,6 +228,7 @@
                         <div class="relative">
                             <i class="fas fa-envelope input-icon"></i>
                             <input type="text" id="email" name="email" value="{{ old('email') }}"
+                                   maxlength="256"  autocomplete="off"
                                    class="input-field @error('email') input-error @enderror"
                                    aria-describedby="email_error">
                         </div>

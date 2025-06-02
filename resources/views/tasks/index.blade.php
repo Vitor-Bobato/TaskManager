@@ -205,7 +205,7 @@
                 showConfirmButton: false,
                 timer: 2000,
                 background: '#F9FAFB',
-                position: 'top-end',
+                position: 'bottom-end',
                 toast: true
             });
         </script>

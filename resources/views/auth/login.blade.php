@@ -225,6 +225,7 @@
                         <div class="relative">
                             <i class="fas fa-envelope input-icon"></i>
                             <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                   maxlength="256"  autocomplete="off"
                                    class="input-field @error('email') input-error @enderror"
                                    aria-describedby="email_error">
                         </div>
