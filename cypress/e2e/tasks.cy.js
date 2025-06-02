@@ -55,4 +55,7 @@ describe('Fluxo de Tarefas e Multi-Tenancy', () => {
         // (se UserB não tiver nenhuma tarefa própria semeada)
         cy.get('.empty-state h3').should('contain.text', 'Nenhuma tarefa encontrada'); //
     });
+
+
+
 });
