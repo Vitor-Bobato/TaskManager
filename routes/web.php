@@ -15,6 +15,8 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 // Rota de logout
 Route::post ('/logout', [LoginController::class, 'destroy'])->name('logout');
+//rota para alternar o estado de conclusão da tarefa
+Route::post('/tasks/{task}/toggle-complete', [TaskController::class, 'toggleComplete'])->name('tasks.toggleComplete');
 
 // Rotas protegidas por autenticação
 Route::middleware(['auth'])->group(function () {
