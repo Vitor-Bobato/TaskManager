@@ -14,7 +14,7 @@ class Task extends Model
         'description',
         'due_date',
         'priority',
-        'user_id', // Adicionando a coluna user_id para associar a tarefa ao usuário
+        'user_id',
     ];
 
     public function user()

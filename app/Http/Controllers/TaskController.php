@@ -11,9 +11,6 @@ class TaskController extends Controller
 {
     public function index()
     {
-//        $tasks = Task::all();
-
-
         $user = Auth::user();
         if (!$user) {
             return redirect()->route('login')->with('error', 'Você precisa estar logado para acessar as tarefas.');
@@ -82,7 +79,6 @@ public function update(Request $request, $id) {
     if (Auth::id() !== $task->user_id) {
         return redirect()->route('tasks.index')->with('error', 'Você não tem permissão para editar esta tarefa.');
     }
-    // Validação dos dados
     $validatedData = $request->validate([
         'title' => ['sometimes', 'required', 'string', 'max:255'],
         'description' => ['nullable', 'string', 'max:500'],

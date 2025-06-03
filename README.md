@@ -1,6 +1,6 @@
 # TaskManager - Gerenciador de Tarefas
 
-Bem-vindo ao TaskManager! Este é um aplicativo web construído com Laravel e PHP para ajudar os usuários a gerenciar suas tarefas diárias de forma eficiente, com foco na organização e produtividade.
+Bem-vindo ao TaskManager!! Este é um aplicativo web construído com Laravel e PHP para ajudar os usuários a gerenciar suas tarefas diárias de forma eficiente, com foco na organização e produtividade.
 
 ## ✨ Funcionalidades Principais
 

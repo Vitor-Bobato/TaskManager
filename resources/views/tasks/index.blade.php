@@ -256,7 +256,6 @@
     @endif
 
     <script>
-        // Confirmação para exclusão
         document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -279,7 +278,6 @@
             });
         });
 
-        // Efeito de conclusão de tarefa
         document.querySelectorAll('.complete-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const taskTitle = this.closest('.task-card').querySelector('.task-complete');
@@ -295,11 +293,9 @@
                     this.classList.add('bg-green-600', 'hover:bg-green-700');
                 }
 
-                // Aqui você pode adicionar uma chamada AJAX para atualizar o status no banco de dados
             });
         });
 
-        // Função para mostrar detalhes da tarefa
         function showTaskDetails(task) {
             Swal.fire({
                 title: task.title,

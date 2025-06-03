@@ -9,7 +9,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             TaskSeeder::class,
-            // Outros seeders que você possa ter
         ]);
     }
 }

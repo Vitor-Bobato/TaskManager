@@ -1,3 +1,4 @@
 *
 !.gitignore
 .env
+# Ignore all log files
