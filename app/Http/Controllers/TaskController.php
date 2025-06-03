@@ -42,7 +42,8 @@ class TaskController extends Controller
             'title.required' => 'O título é obrigatório.',
             'title.max' => 'O título não pode exceder 255 caracteres.',
             'description.max' => 'A descrição não pode exceder 500 caracteres.',
-            'due_data.after_or_equal' => 'A data de vencimento deve ser uma data futura ou igual a hoje.',
+            'due_date.date' => 'A data limite deve ser uma data válida.',
+            'due_data.after_or_equal' => 'A data limite deve ser uma data futura ou igual a hoje.',
             'priority.in' => 'A prioridade deve ser uma das seguintes opções: Alta, Media, Baixa.',
         ]);
 

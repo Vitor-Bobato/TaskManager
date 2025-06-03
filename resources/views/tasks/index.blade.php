@@ -105,14 +105,14 @@
         .task-complete.completed::after {
             transform: scaleX(1);
         }
-        
+
         .task-title {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 180px;
         }
-        
+
         .task-description {
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -120,7 +120,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
+
         .view-details-btn {
             color: var(--secondary);
             cursor: pointer;
@@ -129,7 +129,7 @@
             display: inline-flex;
             align-items: center;
         }
-        
+
         .view-details-btn:hover {
             text-decoration: underline;
         }
@@ -189,7 +189,7 @@
                         </div>
 
                         <p class="text-gray-600 mb-4 task-description">{{ $task->description }}</p>
-                        
+
                         <div class="view-details-btn" onclick="showTaskDetails({{ json_encode($task) }})">
                             <i class="fas fa-eye mr-1"></i> Ver detalhes
                         </div>
@@ -298,7 +298,7 @@
                 // Aqui você pode adicionar uma chamada AJAX para atualizar o status no banco de dados
             });
         });
-        
+
         // Função para mostrar detalhes da tarefa
         function showTaskDetails(task) {
             Swal.fire({
@@ -311,7 +311,7 @@
                             ${task.due_date ? new Date(task.due_date).toLocaleDateString('pt-BR') : 'Sem data limite'}
                         </div>
                         <div class="flex items-center text-sm mb-2
-                            ${task.priority === 'Alta' ? 'text-red-600' : 
+                            ${task.priority === 'Alta' ? 'text-red-600' :
                              task.priority === 'Media' ? 'text-yellow-600' : 'text-green-600'}">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             Prioridade: ${task.priority}

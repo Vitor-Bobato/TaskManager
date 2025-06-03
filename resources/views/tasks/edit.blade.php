@@ -169,7 +169,7 @@
                         <label for="title" class="input-label">Título da Tarefa*</label>
                         <input type="text" id="title" name="title" class="input-field"
                                value="{{ old('title', isset($task) ? $task->title : '') }}"
-                               maxlength="50" required autocomplete="off"
+                               maxlength="50"  autocomplete="off"
                                oninput="updateCharCounter('title', 50)">
                         <div class="char-counter" id="counter-title">0/50</div>
                     </div>
@@ -184,12 +184,12 @@
                     <div class="input-group">
                         <label for="due_date" class="input-label">Data Limite*</label>
                         <input type="date" id="due_date" name="due_date" class="input-field"
-                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}" required>
+                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}" >
                     </div>
 
                     <div class="input-group">
                         <label for="priority" class="input-label">Prioridade*</label>
-                        <select id="priority" name="priority" class="input-field" required>
+                        <select id="priority" name="priority" class="input-field" >
                             <option value="" disabled {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }}>Selecione a prioridade</option>
                             <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
                             <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
@@ -232,7 +232,7 @@
                 title: 'Erro!',
                 html: `{!! implode('<br>', $errors->all()) !!}`,
                 confirmButtonText: 'OK',
-                background: '#F9FAFB'
+                confirmButtonColor: '#10B981',
             });
         </script>
     @endif
@@ -316,7 +316,7 @@
                     title: 'Formulário inválido',
                     text: 'Por favor, corrija os erros destacados',
                     confirmButtonText: 'OK',
-                    background: '#F9FAFB'
+                    confirmButtonColor: '#10B981',
                 });
             }
         });

@@ -74,6 +74,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', 'Você foi desconectado com sucesso!');
+        return redirect('/')->with('success', 'Você foi desconectado com sucesso!');
     }
 }
