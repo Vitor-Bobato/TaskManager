@@ -109,7 +109,6 @@ public function toggleComplete(Request $request, $id)
 {
     $task = Task::findOrFail($id);
 
-    // Opcional: checar permissão do usuário
     if (auth()->id() !== $task->user_id) {
         return response()->json(['error' => 'Não autorizado.'], 403);
     }

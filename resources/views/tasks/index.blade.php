@@ -163,8 +163,7 @@
     @endif
 
     <script>
-        // Confirmação para exclusão
-        document.querySelectorAll('.delete-form').forEach(form => {
+       document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 Swal.fire({
@@ -181,8 +180,7 @@
             });
         });
 
-        // AJAX para marcar/desmarcar task como concluída
-        document.querySelectorAll('.complete-btn').forEach(button => {
+       document.querySelectorAll('.complete-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const taskId = this.getAttribute('data-task-id');
                 const btn = this;
@@ -219,7 +217,6 @@
             });
         });
 
-        // Função para mostrar detalhes da tarefa
         function showTaskDetails(task) {
             Swal.fire({
                 title: task.title,
