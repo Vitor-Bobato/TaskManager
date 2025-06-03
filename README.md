@@ -166,3 +166,10 @@ O projeto segue a estrutura padrão do Laravel:
 * `cypress/e2e/`: Contém os arquivos de teste End-to-End do Cypress.
 
 ---
+
+
+## 👤 Autores
+
+- [Paulo Cesar C. Domingues](https://github.com/Pcgo24) (Autor)
+- [Vitor Bobato](https://github.com/Vitor-Bobato) (Autor)
+

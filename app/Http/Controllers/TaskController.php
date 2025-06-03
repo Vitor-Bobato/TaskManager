@@ -105,6 +105,19 @@ public function update(Request $request, $id) {
     return redirect()->route('tasks.index')->with('success', 'Tarefa atualizada com sucesso!');
 }
 
+public function toggleComplete(Request $request, $id)
+{
+    $task = Task::findOrFail($id);
 
+    // Opcional: checar permissão do usuário
+    if (auth()->id() !== $task->user_id) {
+        return response()->json(['error' => 'Não autorizado.'], 403);
+    }
+
+    $task->completed = !$task->completed;
+    $task->save();
+
+    return response()->json(['completed' => $task->completed]);
+}
 
 }
