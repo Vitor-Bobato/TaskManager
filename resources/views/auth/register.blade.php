@@ -242,6 +242,7 @@
                         <div class="relative">
                             <i class="fas fa-lock input-icon"></i>
                             <input type="password" id="password" name="password"
+                                   maxlength="256"  autocomplete="off"
                                    class="input-field @error('password') input-error @enderror"
                                    aria-describedby="password_error">
                             <i class="fas fa-eye password-toggle" id="togglePassword"></i>
@@ -257,6 +258,7 @@
                             <i class="fas fa-lock input-icon"></i>
                             <input type="password" id="password_confirmation" name="password_confirmation"
                                    class="input-field @error('password_confirmation') input-error @enderror"
+                                   maxlength="256"  autocomplete="off"
                                    aria-describedby="password_confirmation_error">
                             <i class="fas fa-eye password-toggle" id="togglePasswordConfirmation"></i>
                         </div>

@@ -231,8 +231,8 @@
                 icon: 'error',
                 title: 'Erro!',
                 html: `{!! implode('<br>', $errors->all()) !!}`,
-                confirmButtonText: 'OK',
-                background: '#F9FAFB'
+                confirmButtonText: 'OK', // copilot, eu quero que esse botão seja verde igual os outros botôes
+                confirmButtonColor: '#10B981',
             });
         </script>
     @endif
@@ -316,7 +316,7 @@
                     title: 'Formulário inválido',
                     text: 'Por favor, corrija os erros destacados',
                     confirmButtonText: 'OK',
-                    background: '#F9FAFB'
+                    background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
                 });
             }
         });
