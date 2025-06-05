@@ -238,7 +238,6 @@
     @endif
 
     <script>
-        // Set min date to today
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
             const yyyy = today.getFullYear();
@@ -247,7 +246,6 @@
             const minDate = `${yyyy}-${mm}-${dd}`;
             document.getElementById('due_date').setAttribute('min', minDate);
 
-            // Initialize counters
             updateCharCounter('title', 50);
             updateCharCounter('description', 500);
         });
@@ -269,7 +267,6 @@
             }
         }
 
-        // Form validation
         document.getElementById('taskForm').addEventListener('submit', function(e) {
             let isValid = true;
 
@@ -280,7 +277,6 @@
             const description = document.getElementById('description').value.trim();
             const dueDate = document.getElementById('due_date').value;
 
-            // Title validation
             if (!title) {
                 showError('title', 'O título é obrigatório');
                 isValid = false;
@@ -289,13 +285,11 @@
                 isValid = false;
             }
 
-            // Description validation
             if (description.length > 500) {
                 showError('description', 'A descrição deve ter no máximo 500 caracteres');
                 isValid = false;
             }
 
-            // Due date validation
             if (!dueDate) {
                 const today = new Date();
                 const selected = new Date (dueDate);

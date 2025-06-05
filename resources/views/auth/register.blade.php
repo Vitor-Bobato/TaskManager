@@ -309,11 +309,10 @@
     @endif
 
     <script>
-        // Toggle password visibility (SEU CÓDIGO ORIGINAL - MANTIDO)
         const togglePassword = document.querySelector('#togglePassword');
-        const passwordInputEl = document.querySelector('#password'); // Renomeado para clareza
+        const passwordInputEl = document.querySelector('#password');
         const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
-        const passwordConfirmationInputEl = document.querySelector('#password_confirmation'); // Renomeado
+        const passwordConfirmationInputEl = document.querySelector('#password_confirmation');
 
         if (togglePassword && passwordInputEl) {
             togglePassword.addEventListener('click', function() {
@@ -333,7 +332,6 @@
             });
         }
 
-        // Função showError ATUALIZADA para criar o elemento de erro se não existir
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
             if (!field) {
@@ -341,10 +339,10 @@
                 return;
             }
             field.classList.add('input-error');
-            let errorElement = document.getElementById(`${fieldId}_error`); // Usa _error
+            let errorElement = document.getElementById(`${fieldId}_error`);
             if (!errorElement) {
                 errorElement = document.createElement('p');
-                errorElement.id = `${fieldId}_error`; // Usa _error
+                errorElement.id = `${fieldId}_error`;
                 errorElement.className = 'error-message';
                 let inputWrapper = field.parentElement;
                 if (inputWrapper && inputWrapper.classList.contains('relative')) {
@@ -361,20 +359,17 @@
             errorElement.style.display = 'block';
         }
 
-        // Form validation
         if (document.getElementById('registerForm')) {
             document.getElementById('registerForm').addEventListener('submit', function(e) {
-                // Limpar classes de erro dos inputs
                 document.querySelectorAll('.input-field').forEach(el => {
                     el.classList.remove('input-error');
                 });
-                // Limpar mensagens de erro (removendo os elementos <p>)
                 document.querySelectorAll('p.error-message').forEach(el => {
                     el.remove();
                 });
 
                 let isValid = true;
-                let specificErrorMessages = []; // Para o SweetAlert (se você decidir reativá-lo)
+                let specificErrorMessages = [];
 
                 function processFieldValidation(fieldId, condition, errorMessage) {
                     if (condition) {
@@ -386,33 +381,22 @@
                     }
                 }
 
-                // Name validation
                 const name = document.getElementById('nome_completo').value.trim();
                 processFieldValidation('nome_completo', !name, 'O nome completo é obrigatório');
-                if (name) { // Só checa min se o nome não estiver vazio
+                if (name) {
                     processFieldValidation('nome_completo', name.length < 3, 'O nome completo deve ter pelo menos 3 caracteres');
                 }
-                // Validação de MAX length para nome (client-side opcional, backend já tem)
-                // if (name.length > 255) { processFieldValidation('nome_completo', true, 'O nome completo não pode exceder 255 caracteres.');}
 
-
-                // Email validation
                 const email = document.getElementById('email').value.trim();
                 processFieldValidation('email', !email, 'O email é obrigatório');
-                if (email) { // Só checa formato se o email não estiver vazio
+                if (email) {
                     processFieldValidation('email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), 'Por favor, insira um email válido');
                 }
-                // Validação de MAX length para email (client-side opcional, backend já tem)
-                // if (email.length > 255) { processFieldValidation('email', true, 'O email não pode exceder 255 caracteres.');}
 
-                // Password validation (com todas as regras de complexidade)
-                const passwordValue = passwordInputEl.value; // Usa a variável do escopo externo
+                const passwordValue = passwordInputEl.value;
                 const passwordErrorFieldId = 'password';
                 processFieldValidation(passwordErrorFieldId, !passwordValue, 'A senha é obrigatória');
                 if (passwordValue) {
-                    // Para o SweetAlert listar todos os erros de senha, cada um seria um 'if' separado.
-                    // Para inline, showError sobrescreve, então a primeira mensagem de erro é a que fica.
-                    // Vamos manter a lógica de "primeiro erro encontrado" para o inline, que o else if faz.
                     if (passwordValue.length < 8) {
                         processFieldValidation(passwordErrorFieldId, true, 'A senha deve ter pelo menos 8 caracteres');
                     } else if (!/[A-Z]/.test(passwordValue)) {
@@ -426,11 +410,10 @@
                     }
                 }
 
-                // Password Confirmation validation
-                const passwordConfirmationValue = passwordConfirmationInputEl.value; // Usa a variável do escopo externo
-                if (passwordValue) { // Só valida confirmação se a senha principal foi digitada
-                    processFieldValidation('password_confirmation', !passwordConfirmationValue, 'A confirmação da senha é obrigatória.'); // << CORRIGIDO para mensagem correta
-                    if (passwordConfirmationValue) { // Só checa se são diferentes se a confirmação foi preenchida
+                const passwordConfirmationValue = passwordConfirmationInputEl.value;
+                if (passwordValue) {
+                    processFieldValidation('password_confirmation', !passwordConfirmationValue, 'A confirmação da senha é obrigatória.');
+                    if (passwordConfirmationValue) {
                         processFieldValidation('password_confirmation', passwordValue !== passwordConfirmationValue, 'As senhas não coincidem');
                     }
                 }
@@ -442,26 +425,6 @@
                         let elementToScrollTo = document.getElementById(`${firstErrorField.id}_error`) || firstErrorField;
                         if(elementToScrollTo) elementToScrollTo.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
-                    // Se você quiser o SweetAlert com a lista de erros, descomente o bloco abaixo
-                    /*
-                    let sweetAlertContentHtml = 'Por favor, corrija os seguintes erros:<br><ul style="text-align: left; margin-top: 10px; list-style-position: inside; padding-left: 20px;">';
-                    if (specificErrorMessages.length > 0) {
-                        specificErrorMessages.forEach(msg => {
-                            sweetAlertContentHtml += `<li>${msg}</li>`;
-                        });
-                        sweetAlertContentHtml += '</ul>';
-                    } else {
-                        sweetAlertContentHtml = 'Por favor, corrija os erros indicados no formulário.';
-                    }
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Formulário Inválido!',
-                        html: sweetAlertContentHtml,
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: 'var(--primary)',
-                        background: 'white'
-                    });
-                    */
                 }
             });
         }

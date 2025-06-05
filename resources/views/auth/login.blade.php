@@ -357,36 +357,27 @@
                 return;
             }
 
-            field.classList.add('input-error'); // Adiciona a borda vermelha (isso já está funcionando)
+            field.classList.add('input-error');
 
-            // Tenta encontrar o elemento de erro. Se não existir, cria um.
             let errorElement = document.getElementById(`${fieldId}_error`);
 
             if (!errorElement) {
                 errorElement = document.createElement('p');
-                errorElement.id = `${fieldId}_error`; // Mantém o padrão de ID para consistência
-                errorElement.className = 'error-message'; // Classe para estilização
+                errorElement.id = `${fieldId}_error`;
+                errorElement.className = 'error-message';
 
-                // Insere o elemento de erro após o div 'relative' que contém o input.
-                // A estrutura no seu HTML é:
-                // <div class="input-group">
-                //   <label ...></label>
-                //   <div class="relative"> <input id="fieldId" ...> </div>
-                //   //   // </div>
-                let inputWrapper = field.parentElement; //  O <div class="relative">
+                let inputWrapper = field.parentElement;
                 if (inputWrapper && inputWrapper.classList.contains('relative')) {
-                    inputWrapper.parentElement.appendChild(errorElement); // Adiciona ao <div class="input-group">
+                    inputWrapper.parentElement.appendChild(errorElement);
                 } else {
-                    // Fallback se a estrutura for diferente: insere após o próprio campo
                     field.parentNode.insertBefore(errorElement, field.nextSibling);
                 }
             }
 
             errorElement.textContent = message;
-            errorElement.style.display = 'block'; // Garante que esteja visível
+            errorElement.style.display = 'block';
         }
 
-        // Auto-focus email field if empty, otherwise password
         document.addEventListener('DOMContentLoaded', function() {
             const emailField = document.getElementById('email');
             const passwordField = document.getElementById('password');

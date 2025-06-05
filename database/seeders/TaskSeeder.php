@@ -17,6 +17,5 @@ class TaskSeeder extends Seeder
         if ($user2) {
             Task::factory()->count(3)->create(['user_id' => $user2->id]);
         }
-        // Adicione mais tarefas para outros usuários se necessário
     }
 }

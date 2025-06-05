@@ -1,70 +1,70 @@
-<?php return array (
-  'laravel-lang/config' => 
+<?php return array ( //
+  'laravel-lang/config' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'LaravelLang\\Config\\ServiceProvider',
     ),
   ),
-  'laravel-lang/lang' => 
+  'laravel-lang/lang' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'LaravelLang\\Lang\\ServiceProvider',
     ),
   ),
-  'laravel-lang/locales' => 
+  'laravel-lang/locales' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'LaravelLang\\Locales\\ServiceProvider',
     ),
   ),
-  'laravel-lang/publisher' => 
+  'laravel-lang/publisher' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'LaravelLang\\Publisher\\ServiceProvider',
     ),
   ),
-  'laravel/pail' => 
+  'laravel/pail' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Pail\\PailServiceProvider',
     ),
   ),
-  'laravel/sail' => 
+  'laravel/sail' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
-  'laravel/tinker' => 
+  'laravel/tinker' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'nesbot/carbon' => 
+  'nesbot/carbon' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
-  'nunomaduro/collision' => 
+  'nunomaduro/collision' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'nunomaduro/termwind' => 
+  'nunomaduro/termwind' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),

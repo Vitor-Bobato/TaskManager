@@ -11,11 +11,11 @@ const validationRules = {
     nome_completo: {
         required: true,
         minLength: 3,
-        maxLength: 255, // ADICIONADO: Regra de comprimento máximo
+        maxLength: 255,
         messages: {
             required: 'O nome completo é obrigatório.',
             minLength: 'O nome deve ter pelo menos 3 caracteres.',
-            maxLength: 'O nome completo não pode exceder 255 caracteres.' // ADICIONADO: Mensagem
+            maxLength: 'O nome completo não pode exceder 255 caracteres.'
         }
     },
     email: {
@@ -25,7 +25,7 @@ const validationRules = {
         messages: {
             required: 'O email é obrigatório.',
             pattern: 'Digite um endereço de email válido (ex: usuario@dominio.com).',
-            maxLength: 'O email não pode exceder 255 caracteres.' // ADICIONADO: Mensagem
+            maxLength: 'O email não pode exceder 255 caracteres.'
         }
     },
     password: {
@@ -47,29 +47,20 @@ const validationRules = {
 };
 
 function handleSubmit(e) {
-    // Limpa todos os erros inline ANTES de validar o formulário novamente.
-    // Isso é importante para que as mensagens de erro não se acumulem visualmente
-    // se o usuário submeter várias vezes.
-    // A função validateForm() chamará markFieldAsInvalid para os erros atuais.
     const errorMessagesPs = document.querySelectorAll('p.error-message');
-    errorMessagesPs.forEach(p => p.textContent = ''); // Limpa o texto em vez de remover o elemento
+    errorMessagesPs.forEach(p => p.textContent = '');
 
-    // Remove as classes de borda de erro/sucesso dos inputs
     document.querySelectorAll('input.border-red-500, input.border-green-500').forEach(input => {
         input.classList.remove('border-red-500', 'border-green-500');
     });
 
 
-    const errors = validateForm(); // Esta função agora só retorna a lista de erros
+    const errors = validateForm();
 
     if (errors.length > 0) {
-        e.preventDefault(); // Impede o envio do formulário se houver erros
-        // markFieldAsInvalid já foi chamado por validateForm e validateSingleField
-        // para exibir erros inline. O SweetAlert é um resumo adicional.
+        e.preventDefault();
         showFormErrors(errors);
     } else {
-        // Nenhuma ação de e.preventDefault(), permite o envio do formulário
-        // O form.submit() não é necessário aqui se não houver preventDefault
     }
 }
 
@@ -81,16 +72,13 @@ function validateForm() {
         const input = document.getElementById(fieldId);
         if (!input) continue;
 
-        // validateSingleField agora retorna true se válido, false se inválido,
-        // e também lida com a exibição da mensagem inline.
         if (!validateSingleField(fieldId)) {
-            // Monta a mensagem de erro para o SweetAlert
             const value = input.type === 'password' ? input.value : input.value.trim();
             if (rules.required && !value) {
                 errors.push(rules.messages.required);
             } else if (rules.minLength && value.length < rules.minLength) {
                 errors.push(rules.messages.minLength);
-            } else if (rules.maxLength && value.length > rules.maxLength) { // ADICIONADO
+            } else if (rules.maxLength && value.length > rules.maxLength) {
                 errors.push(rules.messages.maxLength);
             } else if (rules.pattern && !rules.pattern.test(value)) {
                 errors.push(rules.messages.pattern);
@@ -121,7 +109,7 @@ function setupLiveValidation() {
             if (value !== '' || rules.required) {
                 validateSingleField(fieldId);
             } else {
-                clearFieldError(fieldId); // Limpa se não for obrigatório e estiver vazio
+                clearFieldError(fieldId);
             }
 
             if (fieldId === 'password') {
@@ -142,14 +130,14 @@ function validateSingleField(fieldId) {
     const value = input.type === 'password' ? input.value : input.value.trim();
     let errorMessageText = '';
 
-    clearFieldError(fieldId); // Limpa erros e classes do campo atual
+    clearFieldError(fieldId);
 
     if (rules.required && !value) {
         errorMessageText = rules.messages.required;
-    } else if (value) { // Só valida outras regras se houver valor ou se for obrigatório (já tratado acima)
+    } else if (value) {
         if (rules.minLength && value.length < rules.minLength) {
             errorMessageText = rules.messages.minLength;
-        } else if (rules.maxLength && value.length > rules.maxLength) { // ADICIONADO
+        } else if (rules.maxLength && value.length > rules.maxLength) {
             errorMessageText = rules.messages.maxLength;
         } else if (rules.pattern && !rules.pattern.test(value)) {
             errorMessageText = rules.messages.pattern;
@@ -163,23 +151,17 @@ function validateSingleField(fieldId) {
 
     if (errorMessageText) {
         markFieldAsInvalid(fieldId, errorMessageText);
-        return false; // Inválido
+        return false;
     } else {
-        if (value) { // Marca como verde apenas se tiver conteúdo e passou nas validações
+        if (value) {
             input.classList.add('border-green-500');
         }
-        // Se value for vazio mas não obrigatório, clearFieldError já limpou, não precisa de borda verde.
-        return true; // Válido
+        return true;
     }
 }
 
 // Funções auxiliares MODIFICADAS
 function clearAllErrors() {
-    // Esta função agora é mais focada na limpeza visual para o handleSubmit,
-    // pois clearFieldError e markFieldAsInvalid cuidam da limpeza e exibição individual.
-    // No handleSubmit, já limpamos os error messages e bordas.
-    // Esta função pode ser removida ou simplificada se o handleSubmit já fizer a limpeza.
-    // Por hora, vamos manter a lógica de limpar p.error-message do handleSubmit.
 }
 
 function clearFieldError(fieldId) {
@@ -187,10 +169,9 @@ function clearFieldError(fieldId) {
     if (!input) return;
     input.classList.remove('border-red-500', 'border-green-500');
 
-    // Seleciona o elemento <p> de erro pelo ID e limpa seu conteúdo
     const errorElement = document.getElementById(`${fieldId}_error`);
     if (errorElement) {
-        errorElement.textContent = ''; // Limpa a mensagem de erro
+        errorElement.textContent = '';
     }
 }
 
@@ -202,7 +183,6 @@ function markFieldAsInvalid(fieldId, message) {
     input.classList.add('border-red-500');
     input.setAttribute('aria-invalid', 'true');
 
-    // Seleciona o elemento <p> de erro pelo ID e define sua mensagem
     const errorElement = document.getElementById(`${fieldId}_error`);
     if (errorElement) {
         errorElement.textContent = message;
@@ -210,9 +190,8 @@ function markFieldAsInvalid(fieldId, message) {
 }
 
 function showFormErrors(errors) {
-    if (errors.length === 0) return; // Não mostra SweetAlert se não houver erros (já tratados inline)
+    if (errors.length === 0) return;
 
-    // Foca no primeiro campo com erro (melhora a acessibilidade)
     const firstInvalidFieldId = Object.keys(validationRules).find(id => {
         const input = document.getElementById(id);
         return input && input.classList.contains('border-red-500');

@@ -13,7 +13,7 @@ return [
     | to use as your default connection for database operations. This is
     | the connection which will be utilized unless another connection
     | is explicitly specified when you execute a query / statement.
-    |
+    | é isso ai mesmo\
     */
 
     'default' => env('DB_CONNECTION', 'sqlite'),

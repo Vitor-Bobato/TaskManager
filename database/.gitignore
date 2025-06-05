@@ -1,5 +1,2 @@
 *.sqlite*
-.sqlite
-.env
-.env.cypress
-.env.example
+# é isso mesmo

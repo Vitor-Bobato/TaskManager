@@ -14,35 +14,35 @@
             --primary-light: #D1FAE5;
             --secondary: #3B82F6;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        
+
         .animate-fadeIn {
             animation: fadeIn 0.6s ease forwards;
         }
-        
+
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
-        
+
         .animate-delay-100 { animation-delay: 0.1s; }
         .animate-delay-200 { animation-delay: 0.2s; }
         .animate-delay-300 { animation-delay: 0.3s; }
-        
+
         .btn {
             position: relative;
             overflow: hidden;
@@ -56,34 +56,34 @@
             justify-content: center;
             text-decoration: none;
         }
-        
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        
+
         .btn:active {
             transform: translateY(0);
         }
-        
+
         .btn-green {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .btn-green:hover {
             background-color: var(--primary-dark);
         }
-        
+
         .btn-blue {
             background-color: var(--secondary);
             color: white;
         }
-        
+
         .btn-blue:hover {
             background-color: #2563EB;
         }
-        
+
         .btn::after {
             content: '';
             position: absolute;
@@ -97,11 +97,11 @@
             transform: scale(1, 1) translate(-50%);
             transform-origin: 50% 50%;
         }
-        
+
         .btn:focus:not(:active)::after {
             animation: ripple 1s ease-out;
         }
-        
+
         @keyframes ripple {
             0% {
                 transform: scale(0, 0);
@@ -112,7 +112,7 @@
                 opacity: 0;
             }
         }
-        
+
         .feature-card {
             transition: all 0.3s ease;
             background: white;
@@ -120,7 +120,7 @@
             padding: 1rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
@@ -141,7 +141,7 @@
                 <p class="text-gray-600 mb-8 text-lg">
                     O <strong class="text-green-600">TaskManager</strong> ajuda você a organizar tarefas e compromissos de forma simples e eficiente.
                 </p>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <div class="feature-card animate-fadeIn">
                         <i class="fas fa-check-circle text-green-600 text-2xl mb-2"></i>
@@ -171,16 +171,14 @@
             </div>
         </div>
     </div>
-    
+
     <script>
-        // Adiciona efeito de ripple aos botões
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                // Efeito visual antes de redirecionar
+
                 this.style.transform = 'scale(0.95)';
-                
+
                 setTimeout(() => {
                     window.location.href = this.getAttribute('href');
                 }, 200);

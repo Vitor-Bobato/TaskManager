@@ -11,7 +11,7 @@ return [
     | messages unless another mailer is explicitly specified when sending
     | the message. All additional mailers can be configured within the
     | "mailers" array. Examples of each type of mailer are provided.
-    |
+    | é isso ai mesmo
     */
 
     'default' => env('MAIL_MAILER', 'log'),
