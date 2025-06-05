@@ -22,3 +22,7 @@ yarn-error.log
 /.zed
 .env
 .gitignore
+database/database.sqlite
+.env.cypress
+.env.example
+/node_modules
