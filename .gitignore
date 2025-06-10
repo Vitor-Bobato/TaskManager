@@ -21,4 +21,6 @@ yarn-error.log
 /.vscode
 /.zed
 .env
-.gitignore
+.env.cypress
+.env.example
+/node_modules

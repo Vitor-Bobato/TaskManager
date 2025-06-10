@@ -308,7 +308,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Formulário inválido',
-                    text: 'Por favor, corrija os erros destacados',
+                    text: 'Por favor, corrija os errors destacados',
                     confirmButtonText: 'OK',
                     confirmButtonColor: '#10B981',
                 });

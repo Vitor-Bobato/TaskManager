@@ -131,7 +131,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->post(route('register.store'), $userData);
 
-        // Verifica se houve erros de validação para 'nome_completo' e 'email'
+        // Verifica se houve errors de validação para 'nome_completo' e 'email'
         // (devido à regra 'max:255' no seu RegisterController)
         $response->assertSessionHasErrors(['nome_completo', 'email']);
         $response->assertStatus(302); // Redirecionamento de volta
