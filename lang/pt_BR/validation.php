@@ -154,4 +154,36 @@ return [
     'uppercase'              => 'O :attribute deve ser maiúsculo.',
     'url'                    => 'O formato da URL informada para o campo :attribute é inválido.',
     'uuid'                   => 'O campo :attribute deve ser um UUID válido.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Language Lines
+    |--------------------------------------------------------------------------
+    */
+
+    'custom' => [
+        'due_date' => [
+            'after_or_equal' => 'O campo :attribute deve ser uma data superior ou igual a hoje.',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Attributes
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used to swap our attribute placeholder
+    | with something more reader friendly such as "E-Mail Address" instead
+    | of "email". This simply helps us make our message more expressive.
+    |
+    */
+
+    'attributes' => [
+        'due_date'          => 'data limite',
+        'title'             => 'título',
+        'description'       => 'descrição',
+        'password'          => 'senha',
+        'email'             => 'e-mail',
+        'name'              => 'nome completo',
+    ],
 ];

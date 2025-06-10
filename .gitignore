@@ -21,6 +21,6 @@ yarn-error.log
 /.vscode
 /.zed
 .env
-.env.cypress
+.env.testing
 .env.example
 /node_modules
