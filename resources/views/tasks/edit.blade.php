@@ -159,7 +159,7 @@
             </div>
 
             <div class="form-body">
-                <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
+                <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}" novalidate>
                     @csrf
                     @if(isset($task))
                         @method('PUT')
@@ -270,59 +270,67 @@
         document.getElementById('taskForm').addEventListener('submit', function(e) {
             let isValid = true;
 
-            document.querySelectorAll('.input-field.input-error').forEach(el => el.classList.remove('input-error'));
+            // Limpa erros anteriores
+            document.querySelectorAll('.input-field.border-red-500').forEach(el => el.classList.remove('border-red-500'));
             document.querySelectorAll('.error-message-js').forEach(el => el.remove());
 
             const title = document.getElementById('title').value.trim();
             const description = document.getElementById('description').value.trim();
-            const dueDate = document.getElementById('due_date').value;
+            const dueDate = document.getElementById('due_date').value; // Formato "YYYY-MM-DD"
 
+            // 1. Validação do Título
             if (!title) {
-                showError('title', 'O título é obrigatório');
                 isValid = false;
+                showError('title', 'O título é obrigatório.');
             } else if (title.length > 50) {
-                showError('title', 'O título deve ter no máximo 50 caracteres');
                 isValid = false;
+                showError('title', 'O título deve ter no máximo 50 caracteres.');
             }
 
+            // 2. Validação da Descrição
             if (description.length > 500) {
-                showError('description', 'A descrição deve ter no máximo 500 caracteres');
                 isValid = false;
+                showError('description', 'A descrição deve ter no máximo 500 caracteres.');
             }
 
-            if (!dueDate) {
+            // 3. Validação da Data Limite (Corrigida)
+            if (dueDate) { // A data é opcional, então só validamos se ela for preenchida
+                const selectedDate = new Date(dueDate + 'T00:00:00'); // Adiciona T00:00:00 para evitar problemas de fuso horário
                 const today = new Date();
-                const selected = new Date (dueDate);
-                today.setHours (0, 0, 0, 0);
-                const selectedDataUTC = new Date (selected.getUTCFullYear(), selected.getUTCMonth(), selected.getUTCDate());
+                today.setHours(0, 0, 0, 0); // Zera o horário para comparar apenas a data
 
-                if (selectedDateUTC < today)
-                {
-                    showJsError ('due_date', 'A data limite não pode ser anterior a hoje');
+                const year = selectedDate.getFullYear();
+
+                if (year > 9999) {
                     isValid = false;
+                    showError('due_date', 'O ano não pode ser maior que 9999.');
+                } else if (selectedDate < today) {
+                    isValid = false;
+                    showError('due_date', 'A data limite não pode ser anterior a hoje.');
                 }
             }
 
+            // Se o formulário for inválido, previne o envio e mostra um alerta geral
             if (!isValid) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'error',
-                    title: 'Formulário inválido',
-                    text: 'Por favor, corrija os errors destacados',
+                    title: 'Formulário Inválido',
+                    text: 'Por favor, corrija os erros destacados antes de continuar.',
                     confirmButtonText: 'OK',
-                    confirmButtonColor: '#10B981',
+                    confirmButtonColor: 'var(--primary)',
                 });
             }
         });
 
+        // A sua função showError está correta, não precisa mudar.
+        // Apenas certifique-se que ela está sendo chamada corretamente.
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
-            if (field)
-            {
+            if (field) {
                 field.classList.add('border-red-500');
 
                 const oldError = document.getElementById(`js-error-${fieldId}`);
-
                 if (oldError) oldError.remove();
 
                 const errorElement = document.createElement('div');
@@ -330,11 +338,8 @@
                 errorElement.className = 'text-red-500 text-sm mt-1 error-message-js';
                 errorElement.textContent = message;
 
-                const counter = document.getElementById(`counter-${fieldId}`);
-
-                if (counter) {
-                    counter.parentNode.insertBefore(errorElement, field.nextSibling);
-                }
+                // Insere a mensagem de erro logo após o campo de input
+                field.parentNode.insertBefore(errorElement, field.nextSibling.nextSibling); // Pula o contador de caracteres
             }
         }
     </script>

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 
 Route::get ('/', function () { return view('welcome'); })->name('welcome');
 
@@ -26,3 +29,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
 });
+
+Route::get('/debug-env', function () {
+    return response()->json([
+        'ambiente_app' => App::environment(),
+        'banco_de_dados_via_db' => DB::connection()->getDatabaseName(),
+        'banco_de_dados_via_config' => Config::get('database.connections.mysql.database'),
+    ]);
+});
+

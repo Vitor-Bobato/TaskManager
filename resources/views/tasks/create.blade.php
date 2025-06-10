@@ -148,195 +148,200 @@
     </style>
 </head>
 <body>
-    <div class="container mx-auto px-4 py-8 max-w-md">
-        <div class="form-container">
-            <div class="form-header">
-                <h1 class="form-title">
-                    <i class="fas fa-tasks mr-2"></i>
-                    {{ isset($task) ? 'Editar Tarefa' : 'Criar Nova Tarefa' }}
-                </h1>
-                <p class="form-subtitle">Preencha os detalhes da tarefa abaixo</p>
-            </div>
+<div class="container mx-auto px-4 py-8 max-w-md">
+    <div class="form-container">
+        <div class="form-header">
+            <h1 class="form-title">
+                <i class="fas fa-tasks mr-2"></i>
+                {{ isset($task) ? 'Editar Tarefa' : 'Criar Nova Tarefa' }}
+            </h1>
+            <p class="form-subtitle">Preencha os detalhes da tarefa abaixo</p>
+        </div>
 
-            <div class="form-body">
-                <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
-                    @csrf
-                    @if(isset($task))
-                        @method('PUT')
-                    @endif
+        <div class="form-body">
+            <form id="taskForm" method="POST" action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}" novalidate>
+                @csrf
+                @if(isset($task))
+                    @method('PUT')
+                @endif
 
-                    <div class="input-group">
-                        <label for="title" class="input-label">Título da Tarefa*</label>
-                        <input type="text" id="title" name="title" class="input-field"
-                               value="{{ old('title', isset($task) ? $task->title : '') }}"
-                               maxlength="50"  autocomplete="off"
-                               oninput="updateCharCounter('title', 50)">
-                        <div class="char-counter" id="counter-title">0/50</div>
-                    </div>
+                <div class="input-group">
+                    <label for="title" class="input-label">Título da Tarefa*</label>
+                    <input type="text" id="title" name="title" class="input-field"
+                           value="{{ old('title', isset($task) ? $task->title : '') }}"
+                           maxlength="50"  autocomplete="off"
+                           oninput="updateCharCounter('title', 50)">
+                    <div class="char-counter" id="counter-title">0/50</div>
+                </div>
 
-                    <div class="input-group">
-                        <label for="description" class="input-label">Descrição</label>
-                        <textarea id="description" name="description" class="input-field" rows="4"
-                                  maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description', isset($task) ? $task->description : '') }}</textarea>
-                        <div class="char-counter" id="counter-description">0/500</div>
-                    </div>
+                <div class="input-group">
+                    <label for="description" class="input-label">Descrição</label>
+                    <textarea id="description" name="description" class="input-field" rows="4"
+                              maxlength="500" oninput="updateCharCounter('description', 500)">{{ old('description', isset($task) ? $task->description : '') }}</textarea>
+                    <div class="char-counter" id="counter-description">0/500</div>
+                </div>
 
-                    <div class="input-group">
-                        <label for="due_date" class="input-label">Data Limite*</label>
-                        <input type="date" id="due_date" name="due_date" class="input-field"
-                               value="{{ old('due_date', isset($task) ? $task->due_date : '') }}">
-                    </div>
+                <div class="input-group">
+                    <label for="due_date" class="input-label">Data Limite*</label>
+                    <input type="date" id="due_date" name="due_date" class="input-field"
+                           value="{{ old('due_date', isset($task) ? $task->due_date : '') }}">
+                </div>
 
-                    <div class="input-group">
-                        <label for="priority" class="input-label">Prioridade*</label>
-                        <select id="priority" name="priority" class="input-field" >
-                            <option value="" disabled {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }}>Selecione a prioridade (Opcional)</option>
-                            <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
-                            <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
-                            <option value="Baixa" {{ old('priority', isset($task) ? $task->priority : '') == "Baixa" ? 'selected' : '' }} class="priority-low">Baixa</option>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <label for="priority" class="input-label">Prioridade*</label>
+                    <select id="priority" name="priority" class="input-field" >
+                        <option value="" disabled {{ !old('priority', isset($task) ? $task->priority : '') ? 'selected' : '' }}>Selecione a prioridade (Opcional)</option>
+                        <option value="Alta" {{ old('priority', isset($task) ? $task->priority : '') == "Alta" ? 'selected' : '' }} class="priority-high">Alta</option>
+                        <option value="Media" {{ old('priority', isset($task) ? $task->priority : '') == "Media" ? 'selected' : '' }} class="priority-medium">Média</option>
+                        <option value="Baixa" {{ old('priority', isset($task) ? $task->priority : '') == "Baixa" ? 'selected' : '' }} class="priority-low">Baixa</option>
+                    </select>
+                </div>
 
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-save mr-2"></i>
-                        {{ isset($task) ? 'Atualizar Tarefa' : 'Criar Tarefa' }}
-                    </button>
-                </form>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save mr-2"></i>
+                    {{ isset($task) ? 'Atualizar Tarefa' : 'Criar Tarefa' }}
+                </button>
+            </form>
 
-                <a href="{{ route('tasks.index') }}" class="btn-back">
-                    <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
-                </a>
-            </div>
+            <a href="{{ route('tasks.index') }}" class="btn-back">
+                <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+            </a>
         </div>
     </div>
+</div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 2000,
-                background: '#F9FAFB',
-                position: 'top-end',
-                toast: true
-            });
-        </script>
-    @endif
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000,
+            background: '#F9FAFB',
+            position: 'top-end',
+            toast: true
+        });
+    </script>
+@endif
 
-    @if ($errors->any())
-        <script>
+@if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#10B981',
+        });
+    </script>
+@endif
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const minDate = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('due_date').setAttribute('min', minDate);
+
+        updateCharCounter('title', 50);
+        updateCharCounter('description', 500);
+    });
+
+    function updateCharCounter(field, max) {
+        const input = document.getElementById(field);
+        const counter = document.getElementById('counter-' + field);
+        const length = input.value.length;
+        counter.textContent = `${length}/${max}`;
+
+        if (length > max) {
+            counter.classList.add('over');
+            input.classList.add('border-red-500');
+            input.classList.remove('border-gray-300');
+        } else {
+            counter.classList.remove('over');
+            input.classList.remove('border-red-500');
+            input.classList.add('border-gray-300');
+        }
+    }
+
+    document.getElementById('taskForm').addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Limpa erros anteriores
+        document.querySelectorAll('.input-field.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+        document.querySelectorAll('.error-message-js').forEach(el => el.remove());
+
+        const title = document.getElementById('title').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const dueDate = document.getElementById('due_date').value; // Formato "YYYY-MM-DD"
+
+        // 1. Validação do Título
+        if (!title) {
+            isValid = false;
+            showError('title', 'O título é obrigatório.');
+        } else if (title.length > 50) {
+            isValid = false;
+            showError('title', 'O título deve ter no máximo 50 caracteres.');
+        }
+
+        // 2. Validação da Descrição
+        if (description.length > 500) {
+            isValid = false;
+            showError('description', 'A descrição deve ter no máximo 500 caracteres.');
+        }
+
+        // 3. Validação da Data Limite (Corrigida)
+        if (dueDate) { // A data é opcional, então só validamos se ela for preenchida
+            const selectedDate = new Date(dueDate + 'T00:00:00'); // Adiciona T00:00:00 para evitar problemas de fuso horário
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Zera o horário para comparar apenas a data
+
+            const year = selectedDate.getFullYear();
+
+            if (year > 9999) {
+                isValid = false;
+                showError('due_date', 'O ano não pode ser maior que 9999.');
+            } else if (selectedDate < today) {
+                isValid = false;
+                showError('due_date', 'A data limite não pode ser anterior a hoje.');
+            }
+        }
+
+        // Se o formulário for inválido, previne o envio e mostra um alerta geral
+        if (!isValid) {
+            e.preventDefault();
             Swal.fire({
                 icon: 'error',
-                title: 'Erro!',
-                html: `{!! implode('<br>', $errors->all()) !!}`,
+                title: 'Formulário Inválido',
+                text: 'Por favor, corrija os erros destacados antes de continuar.',
                 confirmButtonText: 'OK',
-                confirmButtonColor: '#10B981',
+                confirmButtonColor: 'var(--primary)',
             });
-        </script>
-    @endif
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            const minDate = `${yyyy}-${mm}-${dd}`;
-            document.getElementById('due_date').setAttribute('min', minDate);
-
-            updateCharCounter('title', 50);
-            updateCharCounter('description', 500);
-        });
-
-        function updateCharCounter(field, max) {
-            const input = document.getElementById(field);
-            const counter = document.getElementById('counter-' + field);
-            const length = input.value.length;
-            counter.textContent = `${length}/${max}`;
-
-            if (length > max) {
-                counter.classList.add('over');
-                input.classList.add('border-red-500');
-                input.classList.remove('border-gray-300');
-            } else {
-                counter.classList.remove('over');
-                input.classList.remove('border-red-500');
-                input.classList.add('border-gray-300');
-            }
         }
+    });
 
-        document.getElementById('taskForm').addEventListener('submit', function(e) {
-            let isValid = true;
+    // A sua função showError está correta, não precisa mudar.
+    // Apenas certifique-se que ela está sendo chamada corretamente.
+    function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.classList.add('border-red-500');
 
-            document.querySelectorAll('.input-field.input-error').forEach(el => el.classList.remove('input-error'));
-            document.querySelectorAll('.error-message-js').forEach(el => el.remove());
+            const oldError = document.getElementById(`js-error-${fieldId}`);
+            if (oldError) oldError.remove();
 
-            const title = document.getElementById('title').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const dueDate = document.getElementById('due_date').value;
+            const errorElement = document.createElement('div');
+            errorElement.id = `js-error-${fieldId}`;
+            errorElement.className = 'text-red-500 text-sm mt-1 error-message-js';
+            errorElement.textContent = message;
 
-            if (!title) {
-                showError('title', 'O título é obrigatório');
-                isValid = false;
-            } else if (title.length > 50) {
-                showError('title', 'O título deve ter no máximo 50 caracteres');
-                isValid = false;
-            }
-
-            if (description.length > 500) {
-                showError('description', 'A descrição deve ter no máximo 500 caracteres');
-                isValid = false;
-            }
-
-            if (!dueDate) {
-                const today = new Date();
-                const selected = new Date (dueDate);
-                today.setHours (0, 0, 0, 0);
-                const selectedDataUTC = new Date (selected.getUTCFullYear(), selected.getUTCMonth(), selected.getUTCDate());
-
-                if (selectedDateUTC < today)
-                {
-                    showJsError ('due_date', 'A data limite não pode ser anterior a hoje');
-                    isValid = false;
-                }
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Formulário inválido',
-                    text: 'Por favor, corrija os errors destacados',
-                    confirmButtonText: 'OK',
-                    background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
-                });
-            }
-        });
-
-        function showError(fieldId, message) {
-            const field = document.getElementById(fieldId);
-            if (field)
-            {
-               field.classList.add('border-red-500');
-
-               const oldError = document.getElementById(`js-error-${fieldId}`);
-
-               if (oldError) oldError.remove();
-
-               const errorElement = document.createElement('div');
-               errorElement.id = `js-error-${fieldId}`;
-               errorElement.className = 'text-red-500 text-sm mt-1 error-message-js';
-               errorElement.textContent = message;
-
-               const counter = document.getElementById(`counter-${fieldId}`);
-
-               if (counter) {
-                   counter.parentNode.insertBefore(errorElement, field.nextSibling);
-               }
-            }
+            // Insere a mensagem de erro logo após o campo de input
+            field.parentNode.insertBefore(errorElement, field.nextSibling.nextSibling); // Pula o contador de caracteres
         }
-    </script>
+    }
+</script>
 </body>
 </html>

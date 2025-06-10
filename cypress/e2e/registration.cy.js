@@ -5,7 +5,7 @@ describe('Formulário de Registro', () => {
     const emailPreCadastradoPeloSeeder = 'email.ja.existe@example.com';
 
     beforeEach(() => {
-        cy.exec('php artisan migrate:fresh --seed --env=cypress');
+        cy.exec('php artisan migrate:fresh --seed --env=testing');
         cy.visit('/register');
     });
 
