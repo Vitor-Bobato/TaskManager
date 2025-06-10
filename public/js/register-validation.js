@@ -202,7 +202,7 @@ function showFormErrors(errors) {
 
     Swal.fire({
         icon: 'error',
-        title: 'Por favor, corrija os erros:',
+        title: 'Por favor, corrija os errors:',
         html: errors.map(err => `<p class="text-left">${err}</p>`).join(''),
         confirmButtonText: 'Entendi',
         customClass: {
